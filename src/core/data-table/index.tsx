@@ -1,6 +1,6 @@
 import React, { forwardRef, Fragment, Ref, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { v4 } from 'uuid';
-import { Checkbox, CheckboxOptionType, DatePicker, Popover, Radio, Table } from 'antd';
+import { Checkbox, CheckboxOptionType, DatePicker, Popover, Radio, Spin, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import dayjs from 'dayjs';
@@ -45,6 +45,7 @@ export const DataTable = forwardRef(
   (
     {
       columns = [],
+      summary,
       id,
       showList = true,
       footer,
@@ -152,20 +153,20 @@ export const DataTable = forwardRef(
     if (params.sorts && typeof params.sorts === 'string') params.sorts = JSON.parse(params.sorts);
 
     const groupButton = (confirm: any, clearFilters: any, key: any, value: any) => (
-      <div className="grid grid-cols-2 gap-2 mt-1">
+      <div className="grid grid-cols-2 gap-2 sm:mt-1 mt-2">
         <Button
           text={t('components.datatable.reset')}
           onClick={() => {
             clearFilters();
             confirm();
           }}
-          className={'justify-center'}
+          className={'justify-center !bg-gray-300 !text-black h-4/5 sm:h-auto !px-2 sm:px-4'}
         />
         <Button
-          icon={<Search className="fill-white h-4 w-4" />}
+          icon={<Search className="fill-white h-3 w-3" />}
           text={t('components.datatable.search')}
           onClick={() => confirm(value)}
-          className={'justify-center'}
+          className={'justify-center h-4/5 sm:h-auto !px-2 sm:px-4'}
         />
       </div>
     );
@@ -187,30 +188,37 @@ export const DataTable = forwardRef(
           if (get && !facade?.result?.data && valueFilter.current[key]) columnSearch(get, '', undefined, facade);
         }, [valueFilter.current[key]]);
         return (
-          <div className={'p-1'}>
-            <input
-              className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
-              type="text"
-              placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
-              onChange={(e) => {
-                clearTimeout(timeoutSearch.current);
-                timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys), 500);
-              }}
-              onKeyUp={async (e) => {
-                if (e.key === 'Enter') await columnSearch(get, e.currentTarget.value, undefined, facade);
-              }}
-            />
-            <div>
-              <RadioGroup
-                options={
-                  filters || get?.facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []
-                }
-                value={selectedKeys}
-                onChange={(e) => setSelectedKeys(e.target.value + '')}
-              />
+          <Spin spinning={facade.isLoading === true || false}>
+            <div className="p-1">
+              {get?.facade && (
+                <input
+                  className="w-full h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
+                  type="text"
+                  placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
+                  onChange={(e) => {
+                    clearTimeout(timeoutSearch.current);
+                    timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys), 500);
+                  }}
+                  onKeyUp={async (e) => {
+                    if (e.key === 'Enter') await columnSearch(get, e.currentTarget.value, undefined, facade);
+                  }}
+                />
+              )}
+              <div>
+                <RadioGroup
+                  options={
+                    filters || get?.facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []
+                  }
+                  value={selectedKeys}
+                  onChange={(e) => setSelectedKeys(e.target.value + '')}
+                />
+                {(filters?.length === 0 || facade?.result?.data?.length === 0) && (
+                  <span className={'px-2'}>{t('components.datatable.No Data')}</span>
+                )}
+              </div>
+              {groupButton(confirm, clearFilters, key, selectedKeys)}
             </div>
-            {groupButton(confirm, clearFilters, key, selectedKeys)}
-          </div>
+          </Spin>
         );
       },
       filterIcon: () => <CheckCircle className="h-4 w-4 fill-gray-600" />,
@@ -224,28 +232,38 @@ export const DataTable = forwardRef(
           if (get && !facade?.result?.data && valueFilter.current[key]) columnSearch(get, '', undefined, facade);
         }, [valueFilter.current[key]]);
         return (
-          <div className={'p-1'}>
-            <input
-              className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
-              type="text"
-              placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
-              onChange={(e) => {
-                clearTimeout(timeoutSearch.current);
-                timeoutSearch.current = setTimeout(() => columnSearch(get, e.target.value, selectedKeys, facade), 500);
-              }}
-              onKeyUp={async (e) => {
-                if (e.key === 'Enter') await columnSearch(get, e.currentTarget.value, undefined, facade);
-              }}
-            />
-            <div>
-              <CheckboxGroup
-                options={filters || facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []}
-                defaultValue={selectedKeys}
-                onChange={(e) => setSelectedKeys(e)}
-              />
+          <Spin spinning={facade.isLoading === true || false}>
+            <div className="p-1">
+              {!!get?.facade && (
+                <input
+                  className="w-full h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4 mb-1"
+                  type="text"
+                  placeholder={t('components.datatable.pleaseEnterValueToSearch') || ''}
+                  onChange={(e) => {
+                    clearTimeout(timeoutSearch.current);
+                    timeoutSearch.current = setTimeout(
+                      () => columnSearch(get, e.target.value, selectedKeys, facade),
+                      500,
+                    );
+                  }}
+                  onKeyUp={async (e) => {
+                    if (e.key === 'Enter') await columnSearch(get, e.currentTarget.value, undefined, facade);
+                  }}
+                />
+              )}
+              <div>
+                <CheckboxGroup
+                  options={filters || facade?.result?.data?.map(get.format).filter((item: any) => !!item.value) || []}
+                  defaultValue={selectedKeys}
+                  onChange={(e) => setSelectedKeys(e)}
+                />
+                {(filters?.length === 0 || facade?.result?.data?.length === 0) && (
+                  <span className={'px-2'}>{t('components.datatable.No Data')}</span>
+                )}
+              </div>
+              {groupButton(confirm, clearFilters, key, selectedKeys)}
             </div>
-            {groupButton(confirm, clearFilters, key, selectedKeys)}
-          </div>
+          </Spin>
         );
       },
       filterIcon: (filtered: boolean) => (
@@ -350,7 +368,7 @@ export const DataTable = forwardRef(
         if (!item?.render) item!.render = (text: string) => text && checkTextToShort(text);
         if (item && !item?.onCell)
           item.onCell = (record) => ({
-            className: record?.id && record?.id === (id || facade?.data?.id) ? '!bg-blue-100' : '',
+            className: record?.id && record?.id === (id || facade?.data?.id) ? '!bg-teal-100' : '',
           });
         // noinspection JSUnusedGlobalSymbols
         return {
@@ -396,12 +414,12 @@ export const DataTable = forwardRef(
         : [];
     return (
       <div className={classNames(className, 'intro-x')}>
-        <div className="sm:flex justify-between mb-2.5">
+        <div className="lg:flex justify-between mb-2.5 gap-y-2.5 responsive-header supplier-tab4 store-tab3 flex-wrap form-index-supplier form-tab">
           {showSearch ? (
             <div className="relative">
               <input
                 id={idTable.current + '_input_search'}
-                className="w-full sm:w-52 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-100 pr-9 pl-4"
+                className="w-full sm:w-80 h-10 rounded-xl text-gray-600 bg-white border border-solid border-gray-300 pr-9 pl-9"
                 defaultValue={params.fullTextSearch}
                 type="text"
                 placeholder={searchPlaceholder || (t('components.datatable.pleaseEnterValueToSearch') as string)}
@@ -430,7 +448,7 @@ export const DataTable = forwardRef(
               />
               {!params.fullTextSearch ? (
                 <Search
-                  className="w-4 h-4 my-1 fill-gray-600 text-lg las absolute top-2 right-2.5 z-10"
+                  className="w-4 h-4 my-1 fill-gray-500 text-lg absolute top-2 left-2.5 z-10"
                   onClick={() => {
                     if (params.fullTextSearch) {
                       (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
@@ -441,7 +459,7 @@ export const DataTable = forwardRef(
               ) : (
                 !!params.fullTextSearch && (
                   <Times
-                    className="w-4 h-4 my-1 fill-gray-600 text-lg las absolute top-2 right-2.5 z-10"
+                    className="w-4 h-4 my-1 fill-gray-500 text-lg las absolute top-2 right-3 z-10"
                     onClick={() => {
                       if (params.fullTextSearch) {
                         (document.getElementById(idTable.current + '_input_search') as HTMLInputElement).value = '';
@@ -470,6 +488,7 @@ export const DataTable = forwardRef(
               }}
               loading={isLoading}
               columns={cols.current}
+              summary={summary}
               pagination={false}
               dataSource={loopData(data)}
               onChange={(pagination, filters, sorts) =>
@@ -507,6 +526,7 @@ DataTable.displayName = 'HookTable';
 type Type = {
   id?: string;
   columns: DataTableModel[];
+  summary?: (data: any) => any;
   showList?: boolean;
   footer?: (result: any) => any;
   defaultRequest?: PaginationQuery;

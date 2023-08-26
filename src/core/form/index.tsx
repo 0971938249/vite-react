@@ -17,7 +17,7 @@ export const Form = ({
   className,
   columns,
   textSubmit = 'components.form.modal.save',
-  textCancel = 'components.form.modal.cancel',
+  textCancel = 'components.datatable.cancel',
   handSubmit,
   handCancel,
   values = {},
@@ -122,9 +122,9 @@ export const Form = ({
           <textarea
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
             className={classNames(
-              'ant-input px-4 py-2.5 w-full rounded-xl text-gray-600 bg-white border border-solid input-description',
+              'ant-input px-4 py-2.5 w-full rounded-xl text-gray-600 border border-solid input-description ',
               {
-                'bg-gray-100 text-gray-400': !!formItem.disabled && formItem.disabled(values, form),
+                'text-gray-400 !border-0': !!formItem.disabled && formItem.disabled(values, form),
               },
             )}
             rows={4}
@@ -178,16 +178,8 @@ export const Form = ({
         return (
           <DateAntDesign.RangePicker
             onCalendarChange={(date) => {
-              form.setFieldValue(
-                item.name,
-                date?.filter((i) => !!i),
-              );
-              formItem.onChange &&
-                formItem.onChange(
-                  date?.filter((i) => !!i),
-                  form,
-                  reRender,
-                );
+              form.setFieldValue(item.name, date?.filter((i) => !!i));
+              formItem.onChange && formItem.onChange(date?.filter((i) => !!i), form, reRender);
             }}
             onOpenChange={(open) => {
               if (!open && form.getFieldValue(item.name)?.length < 2) form.resetFields([item.name]);
@@ -317,6 +309,7 @@ export const Form = ({
               case 'required':
                 switch (item.formItem.type) {
                   case 'text':
+                  case 'name':
                   case 'number':
                   case 'hidden':
                   case 'password':
@@ -458,6 +451,20 @@ export const Form = ({
                   },
                 }));
                 break;
+              case 'textarea':
+                rules.push(() => ({
+                  validator(_: any, value: any) {
+                    if (value?.trim().length > 500) {
+                      return Promise.reject(
+                        t(rule.message || 'components.form.ruleMaxLength', {
+                          max: 500,
+                        }),
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                }));
+                break;
               case 'custom':
                 rules.push(rule.validator);
                 break;
@@ -574,8 +581,8 @@ export const Form = ({
         }
       }}
     >
-      <div className={'group-input'}>
-        <div className={'grid gap-x-5 grid-cols-12'}>
+      <div className={'group-input group-input-profile p-5'}>
+        <div className={'grid gap-x-5 grid-cols-12 group-input'}>
           {_columns.map(
             (column: any, index: number) =>
               (!column?.formItem?.condition ||
@@ -583,7 +590,7 @@ export const Form = ({
                 <div
                   className={classNames(
                     column?.formItem?.classItem,
-                    'col-span-12' +
+                    'col-span-12 col-store' +
                       (' sm:col-span-' +
                         (column?.formItem?.colTablet
                           ? column?.formItem?.colTablet
@@ -603,27 +610,37 @@ export const Form = ({
         {extendForm && extendForm(values)}
       </div>
 
-      <div className={classNames('flex w-full justify-end')}>
-        <div className={'flex gap-2'}>
-          {handCancel && (
-            <Button
-              text={t(textCancel)}
-              className={'md:min-w-[12rem] w-full justify-center out-line'}
-              onClick={handCancel}
-            />
-          )}
-          {extendButton && extendButton(form)}
-          {handSubmit && (
-            <Button
-              text={t(textSubmit)}
-              id={idSubmit}
-              onClick={() => form && form.submit()}
-              disabled={disableSubmit}
-              className={'md:min-w-[12rem] w-full justify-center'}
-              type={'submit'}
-            />
-          )}
-        </div>
+      <div
+        className={classNames('gap-2 flex sm:block', {
+          'justify-center': !extendButton && !handCancel,
+          '!mt-5 items-center w-full flex-col-reverse sm:flex-row sm:inline-flex justify-between':
+            handCancel && handSubmit,
+          //'md:inline-flex w-full justify-between md:float-right': handCancel,
+          'md:inline-flex w-full justify-between relative': handSubmit,
+          'sm:w-auto sm:inline-flex !justify-end text-center items-center sm:flex-row flex-col mt-5':
+            handSubmit && extendButton,
+          '!w-full sm:inline-flex text-center justify-between items-center sm:flex-row flex-col-reverse mt-5':
+            handCancel || extendButton,
+        })}
+      >
+        {handCancel && (
+          <Button
+            text={t(textCancel)}
+            className={'sm:min-w-[8rem] justify-center out-line !border-black w-3/5 sm:w-auto'}
+            onClick={handCancel}
+          />
+        )}
+        {extendButton && extendButton(form)}
+        {handSubmit && (
+          <Button
+            text={t(textSubmit)}
+            id={idSubmit}
+            onClick={() => form && form.submit()}
+            disabled={disableSubmit}
+            className={'sm:min-w-[8rem] justify-center w-3/5 sm:w-auto '}
+            type={'submit'}
+          />
+        )}
       </div>
     </AntForm>
   );

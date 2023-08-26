@@ -32,6 +32,7 @@ export class TableGet {
   method?: string;
   format?: (item: any) => CheckboxOptionType;
   params?: (fullTextSearch: string, value?: any) => any;
+  data?: any;
 }
 
 export class TableItemFilterList {
@@ -39,5 +40,8 @@ export class TableItemFilterList {
   value?: string | number;
 }
 export class TableRefObject {
-  constructor(public onChange: (request?: any) => void, public handleDelete: (id: string) => void) {}
+  constructor(
+    public onChange: (request?: any) => void,
+    public handleDelete: (id: string) => void,
+  ) {}
 }
