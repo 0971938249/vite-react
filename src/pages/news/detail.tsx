@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper';
+import { Pagination } from 'swiper/modules';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { Spin } from 'antd';
@@ -44,9 +44,8 @@ const Page = () => {
     setTimeout(() => {
       postFacade.set({ data: item });
       navigate(
-        `${routeLanguage[language || 'vn']}/${
-          item.translations?.filter((item: any) => item?.language === language)[0].slug
-        }` || '',
+        `${routeLanguage[language || 'vn']}/${item.translations?.filter((item: any) => item?.language === language)[0]
+          .slug}` || '',
       );
     }, 0);
   };

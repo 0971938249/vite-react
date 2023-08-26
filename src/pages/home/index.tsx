@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { Pagination } from 'swiper';
+import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Modal, Spin } from 'antd';
 import { useTranslation } from 'react-i18next';

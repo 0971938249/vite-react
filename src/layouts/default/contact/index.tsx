@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper';
+import { Pagination } from 'swiper/modules';
 import { Spin } from 'antd';
 import { Form } from '@core/form';
 import React from 'react';
