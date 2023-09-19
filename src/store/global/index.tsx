@@ -305,7 +305,7 @@ interface State {
   locale?: typeof viVN | typeof enUS;
 }
 export const GlobalFacade = () => {
-  const dispatch = useAppDispatch();
+   const dispatch = useAppDispatch();
   return {
     ...(useTypedSelector((state) => state[action.name]) as State),
     set: (values: State) => dispatch(action.set(values)),

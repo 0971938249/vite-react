@@ -1,75 +1,70 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
-
 import { Spin } from 'antd';
 import { Form } from '@core/form';
 import { GlobalFacade } from '@store';
-import { routerLinks, lang } from '@utils';
-
+import imgDash from '../../assets/images/logo.svg';
 const Page = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const globalFacade = GlobalFacade();
-  const { isLoading, status, user, data, login, profile } = globalFacade;
+  const { isLoading, data } = globalFacade;
 
-  useEffect(() => {
-    if (status === 'login.fulfilled' && user && Object.keys(user).length > 0) {
-      navigate('/' + lang + '/dashboard', { replace: true });
-      profile();
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event);
+    const inputName = event.target.id;
+    const inputElements = document.querySelectorAll('input');
+    const itemElements = document.querySelectorAll('.ant-form-item-label label');
+    const index = inputName === 'password' ? 1 : 0;
+
+    if (event.target.value.length !== 0) {
+      itemElements[index].classList.add('label-float');
+      inputElements[index].classList.add('input-float');
+    } else {
+      itemElements[index].classList.remove('label-float');
+      inputElements[index].classList.remove('input-float');
     }
-  }, [status]);
-
+  };
   return (
     <Fragment>
-      <div className="text-center mb-8">
-        <h1
-          className="intro-x text-3xl mb-8 font-bold text-teal-900 leading-8 md:text-5xl md:leading-10 lg:leading-10"
-          id={'title-login'}
-        >
-          {t('routes.auth.login.title')}
-        </h1>
-        <h5 className="intro-x font-normal text-teal-900 ">{t('routes.auth.login.subTitle')}</h5>
-      </div>
-      <div className="mx-auto lg:w-3/4 relative">
-        <Spin spinning={isLoading}>
+      <Spin spinning={isLoading}>
+        <div className="text-center mb-8 mt-[18%] lg:mt-0 sm:mt-[25%]">
+          <div>
+            <img src={imgDash} className="w-[50%] h-full inline sm:w-[36%] "></img>
+          </div>
+        </div>
+        <div className="form-login w-[350px] h-[421px] rounded-[5px] sm:w-[450px]">
+          <p className="layout-title text-[28px] text-black mt-1 my-3 uppercase ">{t('titles.Login')}</p>
           <Form
             values={{ ...data }}
-            className="intro-x form-login"
+            className="intro-x !p-0"
             columns={[
               {
                 name: 'email',
-                title: t('columns.auth.login.Username'),
+                title: t('Email or phone number'),
                 formItem: {
-                  placeholder: 'columns.auth.login.Enter Username',
-                  rules: [{ type: 'required' }, { type: 'email' }],
+                  rules: [{ type: 'phone-email' }],
+                  onChange,
+                  onBlur: () => onChange,
                 },
               },
               {
                 name: 'password',
                 title: t('columns.auth.login.password'),
                 formItem: {
-                  placeholder: 'columns.auth.login.Enter Password',
                   type: 'password',
-                  notDefaultValid: true,
                   rules: [{ type: 'required' }],
+                  onChange,
                 },
               },
             ]}
-            textSubmit={'routes.auth.login.Log In'}
-            handSubmit={login}
+            textSubmit={t('columns.auth.login.login')}
+            handSubmit={() => {
+              // login
+            }}
             disableSubmit={isLoading}
           />
-        </Spin>
-        <div className="absolute  top-2/3 right-0 text-right">
-          <button
-            className={'text-teal-900 font-normal underline hover:no-underline mt-2'}
-            onClick={() => navigate(`/${lang}${routerLinks('ForgetPassword')}`)}
-          >
-            {t('routes.auth.login.Forgot Password')}
-          </button>
         </div>
-      </div>
+      </Spin>
     </Fragment>
   );
 };

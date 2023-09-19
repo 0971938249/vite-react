@@ -20,6 +20,7 @@
       "ruleRequired": "Xin vui lòng nhập {{title}}",
       "ruleRequiredSelect": "Xin vui lòng chọn {{title}}",
       "ruleEmail": "Xin vui lòng nhập địa chỉ email hợp lệ!",
+      "ruleEmailPhone": "Xin vui lòng nhập email hoặc số điện thoại hợp lệ!",
       "ruleUsername": "Tên người dùng không chứa các ký tự đặc biệt, chỉ bao gồm chữ cái và chữ số!",
       "ruleMinLength": "Xin vui lòng nhập tối thiểu {{min}} ký tự!",
       "ruleMaxLength": "Xin vui lòng nhập tối đa phải có {{max}} ký tự!",
@@ -96,6 +97,7 @@
   "columns": {
     "auth": {
       "login": {
+        "login": "ĐĂNG NHẬP",
         "Username": "Tên đăng nhập",
         "Enter Username": "Nhập tên đăng nhập",
         "Enter Password": "Nhập mật khẩu",
@@ -118,7 +120,10 @@
     }
   },
   "layout": {
-    "footer": "Công ty cổ phần Công nghệ Ari. ©{{year}}"
+    "footer": "Công ty cổ phần Công nghệ Ari. ©{{year}}",
+    "Sports Heist": "Sports Heist",
+    "Contact": "Liên hệ",
+    "Privacy & Terms": "Quyền riêng tư & Điều khoản"
   },
   "routes": {
     "auth": {

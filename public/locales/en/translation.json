@@ -20,6 +20,7 @@
       "ruleRequired": "Please enter {{title}}",
       "ruleRequiredSelect": "Please choose {{title}}",
       "ruleEmail": "Please enter a valid email address!",
+      "ruleEmailPhone": "Please enter a valid email or phone number!",
       "ruleUsername": "Username contains no special characters, only letters and numbers!",
       "ruleMinLength": "Please enter at least {{min}} characters!",
       "ruleMaxLength": "Please enter maximum {{max}} characters!",
@@ -96,6 +97,7 @@
   "columns": {
     "auth": {
       "login": {
+        "login": "LOG IN",
         "Username": "Username",
         "Enter Username": "Enter Username",
         "Enter Password": "Enter Password",
@@ -118,7 +120,10 @@
     }
   },
   "layout": {
-    "footer": "Ari Technology Company Ltd. ©{{year}}"
+    "footer": "Ari Technology Company Ltd. ©{{year}}",
+    "Sports Heist": "Sports Heist",
+    "Contact": "Contact",
+    "Privacy & Terms": "Privacy & Terms"
   },
   "routes": {
     "auth": {

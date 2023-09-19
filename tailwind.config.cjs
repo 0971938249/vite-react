@@ -31,13 +31,13 @@ module.exports = {
       gray: {
         50: '#f9fafb',
         100: '#f3f4f6',
-        200: '#e5e7eb',
-        300: '#d1d5db',
+        200: '#f7f7f7', //edit
+        300: '#DFDFDF', //edit
         400: '#9ca3af',
-        500: '#6b7280',
-        600: '#4b5563',
-        700: '#374151',
-        800: '#1f2937',
+        500: '#b3b3b3',//edit color lable
+        600: '#8D899C', //edit
+        700: '#00000D', //edit
+        800: '#C8C6CE', //edit
         900: '#111827',
       },
       zinc: {
@@ -218,7 +218,7 @@ module.exports = {
         600: '#4f46e5',
         700: '#4338ca',
         800: '#3730a3',
-        900: '#312e81',
+        900: '#542BE2', //edit
       },
       violet: {
         50: '#f5f3ff',
@@ -296,7 +296,7 @@ module.exports = {
             opacity: '1',
             transform: 'translateX(0px)',
           },
-        }
+        },
       },
       animation: {
         shine: 'shine 0.8s',
@@ -305,7 +305,7 @@ module.exports = {
         'burger-hover-4': 'burgerHover 1s infinite ease-in-out alternate forwards 400ms',
         'burger-hover-6': 'burgerHover 1s infinite ease-in-out alternate forwards 600ms',
       },
-    }
+    },
   },
   plugins: [],
 };

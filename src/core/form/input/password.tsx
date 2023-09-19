@@ -5,17 +5,20 @@ const Component = ({
   value = '',
   placeholder,
   disabled,
+  onChange,
   ...prop
 }: {
   value?: string;
   placeholder: string;
   disabled: boolean;
+  onChange: (e: any) => any;
 }) => {
   const [toggle, set_toggle] = useState(true);
 
   return (
     <div className="relative">
       <input
+       onChange={onChange}
         value={value}
         placeholder={placeholder}
         disabled={disabled}
@@ -26,13 +29,13 @@ const Component = ({
       {!toggle && (
         <Eye
           onClick={() => set_toggle(!toggle)}
-          className="absolute top-2.5 right-3 z-10 w-5 h-5 fill-black fill-eye"
+          className="absolute top-2.5 right-3 z-10 w-0 h-0 fill-black fill-eye"
         />
       )}
       {toggle && (
         <EyeSlash
           onClick={() => set_toggle(!toggle)}
-          className="absolute top-2.5 right-3 z-10 w-5 h-5 fill-black fill-eye"
+          className="absolute top-2.5 right-3 z-10 w-0 h-0 fill-black fill-eye"
         />
       )}
     </div>

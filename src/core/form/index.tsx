@@ -115,6 +115,7 @@ export const Form = ({
               t(formItem.placeholder || '') || t('components.form.Enter') + ' ' + t(item.title)!.toLowerCase()
             }
             disabled={!!formItem.disabled && formItem.disabled(values, form)}
+            onChange={(e) => formItem.onChange && formItem.onChange(e, form, reRender)}
           />
         );
       case 'textarea':
@@ -300,7 +301,11 @@ export const Form = ({
     if (item.formItem) {
       const rules: any = [];
       if (!item.formItem.type) item.formItem.type = 'text';
-
+      const isNotEmail = (value: string) => {
+        const regexEmail =
+          /^(([^<>()[\]\\.,;:$%^&*\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return !regexEmail.test(value);
+      };
       if (item.formItem.rules) {
         item.formItem.rules
           .filter((item: any) => !!item)
@@ -462,6 +467,40 @@ export const Form = ({
                       );
                     }
                     return Promise.resolve();
+                  },
+                }));
+                break;
+              case 'phone-email':
+                rules.push(() => ({
+                  validator(_: any, value: any) {
+                    if (typeof value === 'string') {
+                      // Check if the value is a valid email address.
+                      const regexEmail =
+                        /^(([^<>()[\]\\.,;:$%^&*\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                      if (regexEmail.test(value.trim())) {
+                        return Promise.resolve();
+                      }
+
+                      // Check if the value is a valid phone number.
+                      if (/^\d+$/.test(value)) {
+                        if (value.trim().length < 8) {
+                          return Promise.reject(t('components.form.ruleMinNumberLength', { min: 8 }));
+                        } else if (value.trim().length > 12) {
+                          return Promise.reject(t('components.form.ruleMaxNumberLength', { max: 12 }));
+                        } else {
+                          return Promise.resolve();
+                        }
+                      }
+
+                      // Check if the value is not an email address.
+                      if (isNotEmail(value)) {
+                        // return Promise.resolve();
+                        return Promise.reject(t(rule.message || 'components.form.ruleEmailPhone'));
+                      }
+                    } else {
+                      // The value is not a string, so it is not a valid email address or phone number.
+                      return Promise.reject(t(rule.message || 'components.form.ruleEmailPhone'));
+                    }
                   },
                 }));
                 break;
