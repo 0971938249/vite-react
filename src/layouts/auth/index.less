@@ -6,7 +6,7 @@
   }
 
   .ant-form-item-label label {
-    @apply text-base font-normal ;
+    @apply text-base font-normal;
     &:not([for='sportsClub']) {
       @apply text-gray-500 absolute pointer-events-none left-4 top-6 z-10 transition-all;
     }
@@ -36,6 +36,9 @@
   }
 
   &.form-signup {
+    .ant-select-selector {
+      @apply rounded-none h-14;
+    }
     button {
       @apply !-bottom-20;
     }

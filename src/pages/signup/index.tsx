@@ -4,11 +4,24 @@ import { Spin } from 'antd';
 import { Form } from '@core/form';
 import { GlobalFacade } from '@store';
 import imgDash from '../../assets/images/logo.svg';
-// import logo from '../../assets/images/MU.png';
+import logo from '../../assets/images/MU.png';
 const Page = () => {
   const { t } = useTranslation();
   const globalFacade = GlobalFacade();
   const { isLoading, data } = globalFacade;
+
+  const listClubs = [
+    {
+      value: 'lucy',
+      label: (
+        <div>
+          <img src={logo} className="w-8 h-full inline"></img>Lucy
+        </div>
+      ),
+    },
+    { value: 'Yiminghe', label: 'yiminghe' },
+    { value: 'jack', label: <div>hgth</div> },
+  ];
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event);
@@ -91,11 +104,8 @@ const Page = () => {
                 formItem: {
                   type: 'select',
                   rules: [{ type: 'required' }],
-                  list: [
-                    { value: 'lucy', label: 'Lucy' },
-                    { value: 'Yiminghe', label: 'yiminghe' },
-                    { value: 'jack', label: <div>hgth</div> },
-                  ],
+                  list: listClubs,
+                  // value: {lucy},
                 },
               },
             ]}
