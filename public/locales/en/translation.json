@@ -72,6 +72,8 @@
     "Parameter": "Parameter"
   },
   "pages": {
+    "Onboarding": "Onboarding",
+    "Signup": "Signup",
     "ForgetPassword": "Forgot Password",
     "SetPassword": "Reset Password",
     "User/List": "List User",

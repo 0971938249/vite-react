@@ -2,6 +2,8 @@ export const routerLinks = (name: string, type?: string) => {
   const array: {
     [selector: string]: string;
   } = {
+    Onboarding: '/auth/onboarding',
+    Signup: '/auth/signup',
     Login: '/auth/login',
     ForgetPassword: '/forgot-password',
     VerifyForotPassword: '/verify-forgot-password',

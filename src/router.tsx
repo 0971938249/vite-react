@@ -12,6 +12,16 @@ const pages = [
     isPublic: true,
     child: [
       {
+        path: routerLinks('Onboarding'),
+        component: React.lazy(() => import('@pages/onboarding')),
+        title: 'Onboarding',
+      },
+      {
+        path: routerLinks('Signup'),
+        component: React.lazy(() => import('@pages/signup')),
+        title: 'Signup',
+      },
+      {
         path: routerLinks('Login'),
         component: React.lazy(() => import('@pages/login')),
         title: 'Login',
@@ -154,7 +164,7 @@ const Layout = ({
         <Outlet />
       </Layout>
     );
-  return <Navigate to={`/${lang}${routerLinks('Login')}`} />;
+  return <Navigate to={`/${lang}${routerLinks('Onboarding')}`} />;
 };
 
 const Page = ({

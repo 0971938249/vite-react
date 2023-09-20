@@ -4,6 +4,7 @@ import { Spin } from 'antd';
 import { Form } from '@core/form';
 import { GlobalFacade } from '@store';
 import imgDash from '../../assets/images/logo.svg';
+// import logo from '../../assets/images/MU.png';
 const Page = () => {
   const { t } = useTranslation();
   const globalFacade = GlobalFacade();
@@ -14,7 +15,7 @@ const Page = () => {
     const inputName = event.target.id;
     const inputElements = document.querySelectorAll('input');
     const itemElements = document.querySelectorAll('.ant-form-item-label label');
-    const index = inputName === 'password' ? 1 : 0;
+    const index = inputName === 'password' ? 1 : inputName === 'confirmPassword' ? 2 : 0;
 
     if (event.target.value.length !== 0) {
       itemElements[index].classList.add('label-float');
@@ -24,6 +25,7 @@ const Page = () => {
       inputElements[index].classList.remove('input-float');
     }
   };
+
   return (
     <Fragment>
       <Spin spinning={isLoading}>
@@ -32,8 +34,8 @@ const Page = () => {
             <img src={imgDash} className="w-[50%] h-full inline sm:w-[36%] "></img>
           </div>
         </div>
-        <div className="form-login w-[350px] h-[421px] rounded-[5px] sm:w-[450px] z-20">
-          <p className="layout-title text-[28px] text-black mt-1 my-3 uppercase ">{t('titles.Login')}</p>
+        <div className="form-login form-signup w-[350px] h-[550px] rounded-[5px] sm:w-[450px] z-20">
+          <p className="layout-title text-[28px] text-black mt-1 my-3 uppercase ">Register with Sports Heist</p>
           <Form
             values={{ ...data }}
             className="intro-x !p-0"
@@ -41,7 +43,9 @@ const Page = () => {
               {
                 name: 'email',
                 title: t('Email or phone number'),
+                // title: t('Email'),
                 formItem: {
+                  // rules: [{ type: 'required' },{ type: 'email' }],
                   rules: [{ type: 'phone-email' }],
                   onChange,
                   onBlur: () => onChange,
@@ -49,21 +53,62 @@ const Page = () => {
               },
               {
                 name: 'password',
-                title: t('columns.auth.login.password'),
+                title: 'Password',
                 formItem: {
                   type: 'password',
                   rules: [{ type: 'required' }],
                   onChange,
+                  onBlur: () => onChange,
+                },
+              },
+              {
+                name: 'confirmPassword',
+                title: 'Confirm Password',
+                formItem: {
+                  type: 'password',
+                  rules: [
+                    { type: 'required' },
+                    {
+                      type: 'custom',
+                      validator: ({ getFieldValue }) => ({
+                        validator(rule, value: string) {
+                          const errorMsg = t("Passwords don't match.");
+                          if (!value || getFieldValue('password') === value) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject(new Error(errorMsg));
+                        },
+                      }),
+                    },
+                  ],
+                  onChange,
+                  onBlur: () => onChange,
+                },
+              },
+              {
+                name: 'sportsClub',
+                title: t('Select your Sports Club'),
+                formItem: {
+                  type: 'select',
+                  rules: [{ type: 'required' }],
+                  list: [
+                    { value: 'lucy', label: 'Lucy' },
+                    { value: 'Yiminghe', label: 'yiminghe' },
+                    { value: 'jack', label: <div>hgth</div> },
+                  ],
                 },
               },
             ]}
-            textSubmit={t('columns.auth.login.login')}
+            textSubmit={'SIGN UP'}
             handSubmit={() => {
               // login
             }}
             disableSubmit={isLoading}
           />
         </div>
+        <p>
+          Already a user? <a>LOGIN</a>
+        </p>
       </Spin>
     </Fragment>
   );

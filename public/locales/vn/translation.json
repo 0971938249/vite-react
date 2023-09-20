@@ -72,6 +72,8 @@
     "Parameter": "Tham số"
   },
   "pages": {
+    "Onboarding": "Giới thiệu",
+    "Signup": "Đăng ký",
     "ForgetPassword": "Quên mật khẩu",
     "SetPassword": "Đặt lại mật khẩu",
     "Login": "Đăng nhập",
