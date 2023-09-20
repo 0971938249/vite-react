@@ -166,6 +166,7 @@ export const Form = ({
                 : formatDate || ''
             }
             onChange={(date: any) => formItem.onChange && formItem.onChange(date, form, reRender)}
+            onOpenChange={(selectDate: any) => formItem.onOpenChange && formItem.onOpenChange(selectDate)}
             disabledDate={(current: any) => (formItem.disabledDate ? formItem.disabledDate(current, form) : false)}
             showTime={!!formItem.showTime}
             picker={formItem.picker || 'date'}
@@ -650,7 +651,7 @@ export const Form = ({
       </div>
 
       <div
-        className={classNames('gap-2 flex sm:block', {
+        className={classNames('gap-2 flex sm:block footer-form', {
           'justify-center': !extendButton && !handCancel,
           '!mt-5 items-center w-full flex-col-reverse sm:flex-row sm:inline-flex justify-between':
             handCancel && handSubmit,

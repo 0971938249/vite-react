@@ -8,6 +8,7 @@ const Component = ({
   name,
   id = 'date-picker-' + nanoid(),
   onChange,
+  onOpenChange,
   format,
   disabledDate,
   showTime,
@@ -26,6 +27,7 @@ const Component = ({
       disabled={disabled}
       {...props}
       onOpenChange={(e) => {
+        onOpenChange(e)
         if (!e) {
           const { value }: any = document.getElementById(id);
           const selectDate = dayjs(value, format || 'DD/MM/YYYY');
@@ -49,6 +51,7 @@ type Type = {
   name?: string;
   placeholder?: string;
   id?: string;
+  onOpenChange:(e: any) => void;
   onChange: (selectDate: any, value: any) => void;
   format: string;
   disabledDate: (current: any) => boolean;

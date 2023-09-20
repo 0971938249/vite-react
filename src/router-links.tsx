@@ -4,6 +4,7 @@ export const routerLinks = (name: string, type?: string) => {
   } = {
     Onboarding: '/auth/onboarding',
     Signup: '/auth/signup',
+    SignupMember: '/auth/signup-member',
     Login: '/auth/login',
     ForgetPassword: '/forgot-password',
     VerifyForotPassword: '/verify-forgot-password',

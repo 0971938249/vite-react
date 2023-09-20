@@ -73,7 +73,7 @@ const Page = () => {
                 // title: t('Email'),
                 formItem: {
                   // rules: [{ type: 'required' },{ type: 'email' }],
-                  rules: [{ type: 'phone-email' }],
+                  // rules: [{ type: 'phone-email' }],
                   onChange,
                   onBlur: () => onChange,
                 },
@@ -82,8 +82,8 @@ const Page = () => {
                 name: 'password',
                 title: 'Password',
                 formItem: {
-                  type: 'password',
-                  rules: [{ type: 'required' }],
+                  // type: 'password',
+                  // rules: [{ type: 'required' }],
                   onChange,
                   onBlur: () => onChange,
                 },
@@ -92,9 +92,9 @@ const Page = () => {
                 name: 'confirmPassword',
                 title: 'Confirm Password',
                 formItem: {
-                  type: 'password',
+                  // type: 'password',
                   rules: [
-                    { type: 'required' },
+                    // { type: 'required' },
                     {
                       type: 'custom',
                       validator: ({ getFieldValue }) => ({
@@ -124,14 +124,16 @@ const Page = () => {
               },
             ]}
             textSubmit={'SIGN UP'}
-            handSubmit={() => {}}
+            handSubmit={() => {
+              navigate(`/${lang}${routerLinks('SignupMember')}`);
+            }}
             disableSubmit={isLoading}
           />
           <div className="flex justify-center mt-3 -mb-2">
-            <p className='text-base'>
-              Already a user?&ensp; 
+            <p className="text-base">
+              Already a user?&ensp;
               <button
-                className='button-login'
+                className="button-login"
                 onClick={() => {
                   navigate(`/${lang}${routerLinks('Login')}`);
                 }}

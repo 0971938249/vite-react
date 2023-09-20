@@ -22,6 +22,11 @@ const pages = [
         title: 'Signup',
       },
       {
+        path: routerLinks('SignupMember'),
+        component: React.lazy(() => import('@pages/signup-member')),
+        title: 'SignupMember',
+      },
+      {
         path: routerLinks('Login'),
         component: React.lazy(() => import('@pages/login')),
         title: 'Login',

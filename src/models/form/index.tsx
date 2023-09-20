@@ -48,6 +48,7 @@ export class FormItem {
   symbol?: string;
   initialValues?: { start: string; end: string };
   convert?: (data: any) => any;
+  onOpenChange?: (selectDate: any) => void;
   onChange?: (value: any, form: FormInstance, reRender: any) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement, Element>, form: FormInstance, name: string) => void;
   disabledDate?: (current: any, form: FormInstance) => boolean;
@@ -66,7 +67,7 @@ export class FormItem {
     api: string;
   };
   showSearch?: boolean;
-    mask?: any;
+  mask?: any;
   addonBefore?: (form: FormInstance) => JSX.Element;
   addonAfter?: (form: FormInstance) => JSX.Element;
   maxLength?: number;

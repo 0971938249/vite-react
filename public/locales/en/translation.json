@@ -74,6 +74,7 @@
   "pages": {
     "Onboarding": "Onboarding",
     "Signup": "Signup",
+    "SignupMember": "Signup",
     "ForgetPassword": "Forgot Password",
     "SetPassword": "Reset Password",
     "User/List": "List User",

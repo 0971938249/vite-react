@@ -33,8 +33,8 @@ module.exports = {
         100: '#f3f4f6',
         200: '#f7f7f7', //edit
         300: '#DFDFDF', //edit
-        400: '#9ca3af',
-        500: '#b3b3b3',//edit color lable
+        400: '#D5D5D7',//edit border btn
+        500: '#b3b3b3', //edit color lable
         600: '#8D899C', //edit
         700: '#00000D', //edit
         800: '#C8C6CE', //edit
@@ -213,7 +213,7 @@ module.exports = {
         100: '#e0e7ff',
         200: '#c7d2fe',
         300: '#a5b4fc',
-        400: '#818cf8',
+        400: '#EDE9FA', //edit background btn
         500: '#6366f1',
         600: '#4f46e5',
         700: '#4338ca',

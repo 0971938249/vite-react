@@ -91,7 +91,7 @@ export class User extends CommonEntity {
   }
 }
 const checkLanguage = (language: TLanguage) => {
-  const formatDate = language === 'vn' ? 'DD-MM-YYYY' : 'DD-MM-YYYY';
+  const formatDate = language === 'vn' ? 'DD/MM/YYYY' : 'DD/MM/YYYY';
   const locale = language === 'vn' ? viVN : enUS;
   dayjs.locale(language === 'vn' ? 'vi' : language);
   localStorage.setItem('i18nextLng', language);
