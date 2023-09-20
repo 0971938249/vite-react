@@ -30,7 +30,7 @@ module.exports = {
       },
       gray: {
         50: '#f9fafb',
-        100: '#f3f4f6',
+        100: '#F2F2F2',//edit
         200: '#f7f7f7', //edit
         300: '#DFDFDF', //edit
         400: '#D5D5D7',//edit border btn

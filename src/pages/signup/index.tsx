@@ -5,6 +5,7 @@ import { Form } from '@core/form';
 import { GlobalFacade } from '@store';
 import { useNavigate } from 'react-router';
 import { routerLinks, lang } from '@utils';
+import './style-select.less';
 import imgDash from '../../assets/images/logo.svg';
 import logo from '../../assets/images/MU1.png';
 import mu from '../../assets/images/MU.png';
@@ -19,7 +20,7 @@ const Page = () => {
       value: 'warriors',
       label: (
         <div>
-          <img src={logo} className="w-10 h-10 inline"></img> <span className="pl-1 text-base">Warriors</span>
+          <img src={logo} className="w-11 h-11 inline"></img> <span className="pl-1 text-base">Warriors</span>
         </div>
       ),
     },
@@ -27,7 +28,7 @@ const Page = () => {
       value: 'MU',
       label: (
         <div>
-          <img src={mu} className="w-10 h-10 inline"></img> <span className="pl-1 text-base">MU</span>
+          <img src={mu} className="w-11 h-11 inline"></img> <span className="pl-1 text-base">MU</span>
         </div>
       ),
     },
@@ -73,7 +74,7 @@ const Page = () => {
                 // title: t('Email'),
                 formItem: {
                   // rules: [{ type: 'required' },{ type: 'email' }],
-                  // rules: [{ type: 'phone-email' }],
+                  rules: [{ type: 'phone-email' }],
                   onChange,
                   onBlur: () => onChange,
                 },
@@ -82,8 +83,8 @@ const Page = () => {
                 name: 'password',
                 title: 'Password',
                 formItem: {
-                  // type: 'password',
-                  // rules: [{ type: 'required' }],
+                  type: 'password',
+                  rules: [{ type: 'required' }],
                   onChange,
                   onBlur: () => onChange,
                 },
@@ -92,9 +93,9 @@ const Page = () => {
                 name: 'confirmPassword',
                 title: 'Confirm Password',
                 formItem: {
-                  // type: 'password',
+                  type: 'password',
                   rules: [
-                    // { type: 'required' },
+                    { type: 'required' },
                     {
                       type: 'custom',
                       validator: ({ getFieldValue }) => ({
