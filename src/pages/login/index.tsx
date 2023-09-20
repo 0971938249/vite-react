@@ -58,9 +58,7 @@ const Page = () => {
               },
             ]}
             textSubmit={t('columns.auth.login.login')}
-            handSubmit={() => {
-              // login
-            }}
+            handSubmit={() => {}}
             disableSubmit={isLoading}
           />
         </div>

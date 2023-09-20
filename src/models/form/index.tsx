@@ -66,7 +66,7 @@ export class FormItem {
     api: string;
   };
   showSearch?: boolean;
-  mask?: any;
+    mask?: any;
   addonBefore?: (form: FormInstance) => JSX.Element;
   addonAfter?: (form: FormInstance) => JSX.Element;
   maxLength?: number;

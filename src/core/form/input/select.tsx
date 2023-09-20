@@ -9,6 +9,7 @@ const Component = ({
   form,
   value,
   showSearch = true,
+  // allowClear = false,
   maxTagCount,
   onChange,
   placeholder,
@@ -63,9 +64,9 @@ const Component = ({
       disabled={disabled}
       listHeight={200}
       filterOption={false}
-      showSearch={true}
+      showSearch={showSearch}
       loading={facade?.isLoading || false}
-      allowClear
+      // allowClear={allowClear}
       // onBlur={() => loadData('')}
       onSearch={showSearch ? (value) => loadData(value) : undefined}
       value={value}
@@ -90,6 +91,7 @@ type Type = {
   form: FormInstance;
   value?: any;
   showSearch?: boolean;
+  allowClear?: boolean;
   maxTagCount: number | 'responsive';
   onChange: (e: any) => any;
   placeholder: string;

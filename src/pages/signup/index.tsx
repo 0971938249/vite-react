@@ -3,24 +3,34 @@ import { useTranslation } from 'react-i18next';
 import { Spin } from 'antd';
 import { Form } from '@core/form';
 import { GlobalFacade } from '@store';
+import { useNavigate } from 'react-router';
+import { routerLinks, lang } from '@utils';
 import imgDash from '../../assets/images/logo.svg';
-import logo from '../../assets/images/MU.png';
+import logo from '../../assets/images/MU1.png';
+import mu from '../../assets/images/MU.png';
 const Page = () => {
   const { t } = useTranslation();
   const globalFacade = GlobalFacade();
-  const { isLoading, data } = globalFacade;
+  const navigate = useNavigate();
+  const { isLoading } = globalFacade;
 
   const listClubs = [
     {
-      value: 'lucy',
+      value: 'warriors',
       label: (
         <div>
-          <img src={logo} className="w-8 h-full inline"></img>Lucy
+          <img src={logo} className="w-10 h-10 inline"></img> <span className="pl-1 text-base">Warriors</span>
         </div>
       ),
     },
-    { value: 'Yiminghe', label: 'yiminghe' },
-    { value: 'jack', label: <div>hgth</div> },
+    {
+      value: 'MU',
+      label: (
+        <div>
+          <img src={mu} className="w-10 h-10 inline"></img> <span className="pl-1 text-base">MU</span>
+        </div>
+      ),
+    },
   ];
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,10 +57,14 @@ const Page = () => {
             <img src={imgDash} className="w-[50%] h-full inline sm:w-[36%] "></img>
           </div>
         </div>
-        <div className="form-login form-signup w-[350px] h-[550px] rounded-[5px] sm:w-[450px] z-20">
-          <p className="layout-title text-[28px] text-black mt-1 my-3 uppercase ">Register with Sports Heist</p>
+        <div className="form-login form-signup w-[350px] rounded-[5px] sm:w-[450px] z-20">
+          <p className="layout-title text-[28px] text-black mt-1 my-3 uppercase mb-10">Register with Sports Heist</p>
           <Form
-            values={{ ...data }}
+            values={{
+              sportsClub: {
+                value: 'warriors',
+              },
+            }}
             className="intro-x !p-0"
             columns={[
               {
@@ -102,23 +116,31 @@ const Page = () => {
                 name: 'sportsClub',
                 title: t('Select your Sports Club'),
                 formItem: {
+                  showSearch: false,
                   type: 'select',
                   rules: [{ type: 'required' }],
                   list: listClubs,
-                  // value: {lucy},
                 },
               },
             ]}
             textSubmit={'SIGN UP'}
-            handSubmit={() => {
-              // login
-            }}
+            handSubmit={() => {}}
             disableSubmit={isLoading}
           />
+          <div className="flex justify-center mt-3 -mb-2">
+            <p className='text-base'>
+              Already a user?&ensp; 
+              <button
+                className='button-login'
+                onClick={() => {
+                  navigate(`/${lang}${routerLinks('Login')}`);
+                }}
+              >
+                LOGIN
+              </button>
+            </p>
+          </div>
         </div>
-        <p>
-          Already a user? <a>LOGIN</a>
-        </p>
       </Spin>
     </Fragment>
   );

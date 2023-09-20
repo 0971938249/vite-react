@@ -36,11 +36,29 @@
   }
 
   &.form-signup {
-    .ant-select-selector {
-      @apply rounded-none h-14;
+    .col-span-12:nth-child(4) {
+      @apply mt-1;
+      .ant-form .ant-form-item-label {
+        @apply mb-2;
+      }
+      .ant-select-selector {
+        @apply rounded-none h-14;
+      }
+      .ant-select-single.ant-select-show-arrow .ant-select-selection-item {
+        @apply h-10;
+      }
+      :where(.css-dev-only-do-not-override-1hdpr7v).ant-select .ant-select-arrow {
+        @apply text-black;
+        top: 85%;
+      }
     }
+    
     button {
-      @apply !-bottom-20;
+      @apply !inset-0 relative mt-7;
+      &.button-login {
+        @apply hover:!bg-transparent h-auto !bg-transparent !text-indigo-900 shadow-none relative font-bold mt-0 w-auto text-[15px];
+      }
     }
   }
 }
+ 
