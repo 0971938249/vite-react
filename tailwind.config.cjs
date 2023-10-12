@@ -3,6 +3,10 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   safelist: [{ pattern: /col-span-/, variants: ['sm', 'lg'] }, 'w-7', 'h-7'],
   theme: {
+    fontFamily: {
+      BebasNeus: ['Bebas Neue', 'sans-serif'],
+      helvetica: ['Helvetica Neue', 'sans-serif'],
+    },
     screens: {
       sm: '640px',
       md: '768px',
@@ -296,7 +300,7 @@ module.exports = {
             opacity: '1',
             transform: 'translateX(0px)',
           },
-        }
+        },
       },
       animation: {
         shine: 'shine 0.8s',
@@ -305,7 +309,7 @@ module.exports = {
         'burger-hover-4': 'burgerHover 1s infinite ease-in-out alternate forwards 400ms',
         'burger-hover-6': 'burgerHover 1s infinite ease-in-out alternate forwards 600ms',
       },
-    }
+    },
   },
   plugins: [],
 };

@@ -88,6 +88,7 @@ export const DataTable = forwardRef(
     const cols = useRef<DataTableModel[]>();
     const refPageSizeOptions = useRef<number[]>();
     const { result, isLoading, queryParams, time } = facade;
+    // console.log("result:", result)
     // eslint-disable-next-line prefer-const
     let [params, setParams] = useState(
       save && location.search && location.search.indexOf('=') > -1
