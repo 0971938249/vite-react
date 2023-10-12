@@ -4,7 +4,7 @@ module.exports = {
   safelist: [{ pattern: /col-span-/, variants: ['sm', 'lg'] }, 'w-7', 'h-7'],
   theme: {
     fontFamily: {
-      BebasNeus: ['Bebas Neue', 'sans-serif'],
+      bebasNeus: ['Bebas Neue', 'sans-serif'],
       helvetica: ['Helvetica Neue', 'sans-serif'],
     },
     screens: {

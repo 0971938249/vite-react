@@ -103,7 +103,7 @@ const Page = () => {
           <LogoSportHeist/>
           </a>
           <form className="border border-[#E5E5E5] rounded p-6 bg-white flex flex-col">
-            <div className="font-BebasNeus font-normal text-3xl mb-4">
+            <div className="font-bebasNeus font-normal text-3xl mb-4">
               Login
             </div>
             <div className="w-[400px] h-[56px] px-4 rounded-sm border border-[#DFDFDF] bg-white mb-4 font-helvetica text-black relative group flex flex-col justify-end">
