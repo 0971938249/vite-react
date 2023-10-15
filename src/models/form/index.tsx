@@ -36,7 +36,11 @@ export class FormItem {
     | 'select'
     | 'tree_select'
     | 'otp'
-    | 'switch';
+    | 'switch'
+    | 'absolute_label'
+    | 'absolute_password'
+    ;
+    
   col?: number;
   condition?: (value: string, form: FormInstance, index: number, values: any) => boolean;
   list?: CheckboxOptionType[];

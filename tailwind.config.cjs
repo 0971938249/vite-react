@@ -4,7 +4,7 @@ module.exports = {
   safelist: [{ pattern: /col-span-/, variants: ['sm', 'lg'] }, 'w-7', 'h-7'],
   theme: {
     fontFamily: {
-      bebasNeus: ['Bebas Neue', 'sans-serif'],
+      bebas: ['Bebas Neue', 'sans-serif'],
       helvetica: ['Helvetica Neue', 'sans-serif'],
     },
     screens: {
@@ -20,6 +20,13 @@ module.exports = {
       transparent: 'transparent',
       black: '#000',
       white: '#fff',
+      config: {
+        ind650: '#542BE2',
+        gr350: '#C8C6CE',
+        gr450: '#8D899C',
+        whitefd: '#DFDFDF',
+        e5: "#E5E5E5"
+      },
       slate: {
         50: '#f8fafc',
         100: '#f1f5f9',

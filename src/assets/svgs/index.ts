@@ -22,3 +22,4 @@ export { ReactComponent as Key } from './key.svg';
 export { ReactComponent as Out } from './out.svg';
 export { ReactComponent as Logo } from './logo.svg';
 export { ReactComponent as LogoSportHeist } from './sportHeist.svg';
+export { ReactComponent as CopyRight } from './copyright.svg';

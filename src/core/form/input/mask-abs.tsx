@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { FormInstance } from 'antd';
+import { Label } from '../label';
 
 const Component = ({
   mask,
+  name,
   value,
   addonBefore,
   addonAfter,
@@ -15,8 +17,6 @@ const Component = ({
   onChange,
   ...prop
 }: Type) => {
-  console.log("name:", name)
-
   const input = useRef<any>();
 
   useEffect(() => {
@@ -38,24 +38,31 @@ const Component = ({
   };
 
   return (
-    <div className={classNames('flex items-center', { 'ant-input border rounded-xl': !!addonBefore || !!addonAfter })}>
+    <div className={classNames('flex items-center', { 'ant-input': !!addonBefore || !!addonAfter })}>
       {!!addonBefore && <div>{addonBefore(form)}</div>}
-      <input
-        ref={input}
-        className={classNames('w-full h-10 text-gray-600 bg-white px-4', addonBoolean)}
-        readOnly={disabled}
-        value={value || ''}
-        maxLength={maxLength}
-        placeholder={placeholder}
-        onBlur={onBlur}
-        onChange={onChange}
-        {...prop}
-      />
+      <Label label={placeholder} value={value || ''} htmlFor={name}>
+        <input
+          ref={input}
+          name={name}
+          className={classNames(
+            'w-full text-base text-black !font-helvetica font-normal px-4 pb-2 pt-[22px] !rounded-sm outline-none',
+            addonBoolean,
+          )}
+          readOnly={disabled}
+          value={value || ''}
+          maxLength={maxLength}
+          // placeholder={placeholder}
+          onBlur={onBlur}
+          onChange={onChange}
+          {...prop}
+        />
+      </Label>
       {!!addonAfter && <div>{addonAfter(form)}</div>}
     </div>
   );
 };
 type Type = {
+  name: string;
   mask?: string;
   value?: string;
   addonBefore?: (form: FormInstance) => JSX.Element;

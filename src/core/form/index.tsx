@@ -18,7 +18,20 @@ import { convertFormValue } from '@utils';
 import { FormItem, FormModel } from '@models';
 import { GlobalFacade } from '@store';
 import { Check, Times } from '@svgs';
-import { Chips, SelectTag, Select, TreeSelect, TableTransfer, Password, Mask, Addable, DatePicker, Tab } from './input';
+import {
+  Chips,
+  SelectTag,
+  Select,
+  TreeSelect,
+  TableTransfer,
+  Password,
+  Mask,
+  Addable,
+  DatePicker,
+  Tab,
+  MaskAbsolute,
+  PasswordAbsolute,
+} from './input';
 import { Upload } from '../upload';
 import { Button } from '../button';
 import { Editor } from '../editor';
@@ -121,6 +134,16 @@ export const Form = ({
       case 'password':
         return (
           <Password
+            placeholder={
+              t(formItem.placeholder || '') || t('components.form.Enter') + ' ' + t(item.title)!.toLowerCase()
+            }
+            disabled={!!formItem.disabled && formItem.disabled(values, form)}
+          />
+        );
+      case 'absolute_password':
+        return (
+          <PasswordAbsolute
+            name={item.name}
             placeholder={
               t(formItem.placeholder || '') || t('components.form.Enter') + ' ' + t(item.title)!.toLowerCase()
             }
@@ -316,6 +339,25 @@ export const Form = ({
         );
       case 'otp':
         return <InputOTP inputType="numeric" length={formItem.maxLength || 5} />;
+      case 'absolute_label':
+        return (
+          <MaskAbsolute
+            name={item.name}
+            form={form}
+            mask={formItem.mask}
+            addonBefore={formItem.addonBefore}
+            addonAfter={formItem.addonAfter}
+            maxLength={formItem.maxLength}
+            placeholder={
+              t(formItem.placeholder || '') || t('components.form.Enter') + ' ' + t(item.title)!.toLowerCase()
+            }
+            onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) =>
+              formItem.onBlur && formItem.onBlur(e, form, name)
+            }
+            onChange={(value: any) => formItem.onChange && formItem.onChange(value, form, reRender)}
+            disabled={!!formItem.disabled && formItem.disabled(values, form)}
+          />
+        );
       default:
         // @ts-ignore
         return (
@@ -356,6 +398,7 @@ export const Form = ({
                   case 'number':
                   case 'hidden':
                   case 'password':
+                  case 'absolute_password':
                   case 'textarea':
                     rules.push({
                       required: true,
@@ -619,7 +662,7 @@ export const Form = ({
 
   return (
     <AntForm
-      className={classNames('p-2', className)}
+      className={classNames('p-2 ', className)}
       form={form}
       layout={!widthLabel ? 'vertical' : 'horizontal'}
       onFinishFailed={(failed) =>
@@ -641,8 +684,8 @@ export const Form = ({
         }
       }}
     >
-      <div className={'group-input group-input-profile'}>
-        <div className={'grid gap-x-5 grid-cols-12 group-input'}>
+      <div className={'group-input group-input-profile '}>
+        <div className={'grid gap-x-5 grid-cols-12 group-input '}>
           {_columns.map(
             (column: any, index: number) =>
               (!column?.formItem?.condition ||

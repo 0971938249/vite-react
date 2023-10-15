@@ -8,5 +8,8 @@ import TreeSelect from './tree-select';
 import TableTransfer from './table-transfer';
 import Addable from './addable';
 import Tab from './tab';
+import MaskAbsolute from './mask-abs';
+export { default as PasswordAbsolute } from './password-abs';
 
-export { Chips, DatePicker, Password, Mask, SelectTag, Select, TreeSelect, TableTransfer, Addable, Tab };
+
+export { Chips, DatePicker, Password, Mask, SelectTag, Select, TreeSelect, TableTransfer, Addable, Tab, MaskAbsolute };
