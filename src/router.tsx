@@ -135,6 +135,10 @@ const pages = [
         path: routerLinks('User') + '/:roleCode/:id/edit',
         component: React.lazy(() => import('@pages/user/add')),
         title: 'User/Edit',
+      },{
+        path: routerLinks('Product') ,
+        component: React.lazy(() => import('@pages/product/index')),
+        title: 'User/Edit',
       },
     ], // 💬 generate link to here
   },
