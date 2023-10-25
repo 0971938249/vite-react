@@ -27,7 +27,7 @@ export const routerLinks = (name: string, type?: string) => {
     Code: '/code',
     UserRole: '/user-role',
     User: '/user',
-    Product: '/user',
+    Product: '/product',
     Data: '/data',
     DataType: '/data-type',
     Post: '/post',
