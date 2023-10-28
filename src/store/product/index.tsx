@@ -6,8 +6,8 @@ import { CommonEntity, PaginationQuery, Responses } from '@models';
 const name = 'product';
 const action = {
   ...new Action<product>(name),
-  getPermission: createAsyncThunk(name + '/permission', async () =>
-    API.get<Responses<string[]>>(`${routerLinks(name, 'api')}/permission`),
+  getproduct: createAsyncThunk(name + '/product', async () =>
+    API.get<Responses<string[]>>(`${routerLinks(name, 'api')}/product`),
   ),
 };
 export const productSlice = createSlice(new Slice<product>(action, { keepUnusedDataFor: 9999 }));
@@ -23,9 +23,19 @@ export const productFacade = () => {
     put: (values: product) => dispatch(action.put(values)),
     putDisable: (values: { id: string; disable: boolean }) => dispatch(action.putDisable(values)),
     delete: (id: string) => dispatch(action.delete(id)),
-    getPermission: () => dispatch(action.getPermission()),
+    getproduct: () => dispatch(action.getproduct()),
   };
 };
 export class product extends CommonEntity {
-  
+  constructor(
+    public name?: string,
+    public code?: string,
+    public isSystemAdmin?: boolean,
+    public products?: string[],
+    public users?: User[],
+    public createdAt?: string,
+    public updatedAt?: string,
+  ) {
+    super();
+  }
 }
