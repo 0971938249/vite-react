@@ -8,7 +8,7 @@ import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
 
 import { TableRefObject } from '@models';
-import { UserFacade, GlobalFacade, CodeFacade, UserRoleFacade } from '@store';
+import { productFacade } from '@store';
 import { Check, Disable, Edit, Plus, Trash } from '@svgs';
 import { keyRole, routerLinks, lang } from '@utils';
 import classNames from 'classnames';
@@ -16,17 +16,9 @@ import { createSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 const Page = () => {
-  const userRoleFacade = UserRoleFacade();
-  const { user, set, formatDate } = GlobalFacade();
+
   useEffect(() => {
-    if (!userRoleFacade?.result?.data) userRoleFacade.get({});
-    set({
-      breadcrumbs: [
-        { title: 'titles.User', link: '' },
-        { title: 'titles.User/List', link: '' },
-      ],
-    });
-  }, []);
+ 
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -89,6 +81,37 @@ const Page = () => {
                   >
                     {index + 1}. {data.name}
                   </div>
+                  {/*<span className="w-16 flex justify-end gap-1">*/}
+                  {/*  {user?.role?.permissions?.includes(keyRole.P_USER_ROLE_UPDATE) && (*/}
+                  {/*    <Tooltip title={t('routes.admin.Layout.Edit')}>*/}
+                  {/*      <button*/}
+                  {/*        className={'opacity-0 group-hover:opacity-100 transition-all duration-300 '}*/}
+                  {/*        title={t('routes.admin.Layout.Edit') || ''}*/}
+                  {/*        onClick={() => navigate(`/${lang}${routerLinks('Code')}/${data.id}/edit`)}*/}
+                  {/*      >*/}
+                  {/*        <Edit className="icon-cud bg-blue-600 hover:bg-blue-400" />*/}
+                  {/*      </button>*/}
+                  {/*    </Tooltip>*/}
+                  {/*  )}*/}
+                  {/*  {user?.role?.permissions?.includes(keyRole.P_USER_ROLE_DELETE) && (*/}
+                  {/*    <Tooltip title={t('routes.admin.Layout.Delete')}>*/}
+                  {/*      <Popconfirm*/}
+                  {/*        placement="left"*/}
+                  {/*        title={t('components.datatable.areYouSureWant')}*/}
+                  {/*        onConfirm={() => dataTableRef?.current?.handleDelete!(data.id || '')}*/}
+                  {/*        okText={t('components.datatable.ok')}*/}
+                  {/*        cancelText={t('components.datatable.cancel')}*/}
+                  {/*      >*/}
+                  {/*        <button*/}
+                  {/*          className={'opacity-0 group-hover:opacity-100 transition-all duration-300'}*/}
+                  {/*          title={t('routes.admin.Layout.Delete') || ''}*/}
+                  {/*        >*/}
+                  {/*          <Trash className="icon-cud bg-red-600 hover:bg-red-400" />*/}
+                  {/*        </button>*/}
+                  {/*      </Popconfirm>*/}
+                  {/*    </Tooltip>*/}
+                  {/*  )}*/}
+                  {/*</span>*/}
                 </div>
               ))}
             </div>

@@ -28,13 +28,22 @@ export const productFacade = () => {
 };
 export class product extends CommonEntity {
   constructor(
+    public id?: string,
     public name?: string,
-    public code?: string,
-    public isSystemAdmin?: boolean,
-    public products?: string[],
-    public users?: User[],
-    public createdAt?: string,
-    public updatedAt?: string,
+    public description?: string,
+    public quanlity?: string,
+    public price?: string,
+    public images?: string[],
+    public status?: string,
+    public slug?: string,
+    public mass?: string,
+    public discount?: string,
+    public productCategoryId?: string,
+    public prodictStoreId?: string,
+    public isDeleted?: string,
+    public isDisabled?: string,
+    public createAt?: string,
+    public updateAt?: string,
   ) {
     super();
   }
