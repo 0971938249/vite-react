@@ -22,7 +22,7 @@ export * from './data/type';
 export * from './parameter';
 export * from './post';
 export * from './post/type';
-export * from './product/index';
+export * from './product';
 import {
   globalSlice,
   userSlice,
