@@ -8,7 +8,7 @@ import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
 
 import { TableRefObject } from '@models';
-import { productFacade } from '@store';
+import {  GlobalFacade,productFacade } from '@store';
 import { Check, Disable, Edit, Plus, Trash } from '@svgs';
 import { keyRole, routerLinks, lang } from '@utils';
 import classNames from 'classnames';
@@ -16,9 +16,17 @@ import { createSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 const Page = () => {
-
+  const ProductFacade = productFacade();
+  const { user, set, formatDate } = GlobalFacade();
   useEffect(() => {
- 
+    if (!userRoleFacade?.result?.data) userRoleFacade.get({});
+    set({
+      breadcrumbs: [
+        { title: 'titles.User', link: '' },
+        { title: 'titles.User/List', link: '' },
+      ],
+    });
+  }, []);
 
   const navigate = useNavigate();
   useEffect(() => {
