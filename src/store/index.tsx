@@ -34,7 +34,7 @@ import {
   postSlice,
   postTypeSlice,
   parameterSlice,
-  productSlice,
+  ProductSlice,
 } from './';
 const rootReducer = combineReducers({
   [globalSlice.name]: globalSlice.reducer,
@@ -47,5 +47,5 @@ const rootReducer = combineReducers({
   [parameterSlice.name]: parameterSlice.reducer,
   [postSlice.name]: postSlice.reducer,
   [postTypeSlice.name]: postTypeSlice.reducer,
-  [productSlice.name]: productSlice.reducer,
+  [ProductSlice.name]: ProductSlice.reducer,
 });

@@ -3,30 +3,30 @@ import { API, routerLinks } from '@utils';
 import { useAppDispatch, useTypedSelector, Action, Slice, State, User } from '@store';
 import { CommonEntity, PaginationQuery, Responses } from '@models';
 
-const name = 'product';
+const name = 'Product';
 const action = {
-  ...new Action<product>(name),
-  getproduct: createAsyncThunk(name + '/product', async () =>
-    API.get<Responses<string[]>>(`${routerLinks(name, 'api')}/product`),
+  ...new Action<Product>(name),
+  getProduct: createAsyncThunk(name + '/Product', async () =>
+    API.get<Responses<string[]>>(`${routerLinks(name, 'api')}/Product`),
   ),
 };
-export const productSlice = createSlice(new Slice<product>(action, { keepUnusedDataFor: 9999 }));
-export const productFacade = () => {
+export const ProductSlice = createSlice(new Slice<Product>(action));
+export const ProductFacade = () => {
   const dispatch = useAppDispatch();
   return {
-    ...useTypedSelector((state) => state[action.name] as State<product>),
-    set: (values: State<product>) => dispatch(action.set(values)),
-    get: (params: PaginationQuery<product>) => dispatch(action.get(params)),
-    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState?: keyof State<product> }) =>
+    ...useTypedSelector((state) => state[action.name] as State<Product>),
+    set: (values: State<Product>) => dispatch(action.set(values)),
+    get: (params: PaginationQuery<Product>) => dispatch(action.get(params)),
+    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState?: keyof State<Product> }) =>
       dispatch(action.getById({ id, keyState })),
-    post: (values: product) => dispatch(action.post(values)),
-    put: (values: product) => dispatch(action.put(values)),
+    post: (values: Product) => dispatch(action.post(values)),
+    put: (values: Product) => dispatch(action.put(values)),
     putDisable: (values: { id: string; disable: boolean }) => dispatch(action.putDisable(values)),
     delete: (id: string) => dispatch(action.delete(id)),
-    getproduct: () => dispatch(action.getproduct()),
+    getProduct: () => dispatch(action.getProduct()),
   };
 };
-export class product extends CommonEntity {
+export class Product extends CommonEntity {
   constructor(
     public id?: string,
     public name?: string,
@@ -40,7 +40,28 @@ export class product extends CommonEntity {
     public discount?: string,
     public productCategoryId?: string,
     public prodictStoreId?: string,
-    public isDeleted?: string,
+    public productStore?:{
+      id?:string,
+      isDisabled?:string,
+      createdAt?:string,
+      updatedAt?:string,
+      name?:string,
+      status?:string,
+      phone?:string,
+      description?:string,
+      slug?:string,
+      avatar?:string,
+      userId?:string,
+    },
+    public productCategory?:{
+      id?:string,
+      isDisabled?:string,
+      createdAt?:string,
+      updatedAt?:string,
+      name?:string,
+      description?:string,
+      slug?:string,
+    },
     public isDisabled?: string,
     public createAt?: string,
     public updateAt?: string,

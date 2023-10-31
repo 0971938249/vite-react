@@ -2,151 +2,35 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { Popconfirm, Spin, Tooltip, Select } from 'antd';
-
-import { Avatar } from '@core/avatar';
 import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
 
 import { TableRefObject } from '@models';
-import {  GlobalFacade,productFacade } from '@store';
+import {  GlobalFacade,ProductFacade } from '@store';
 import { Check, Disable, Edit, Plus, Trash } from '@svgs';
-import { keyRole, routerLinks, lang } from '@utils';
-import classNames from 'classnames';
-import { createSearchParams } from 'react-router-dom';
+import { keyRole,  } from '@utils';
 import dayjs from 'dayjs';
-
 const Page = () => {
-  const ProductFacade = productFacade();
+  const productFacade = ProductFacade();
+  console.log(productFacade);
+  
   const { user, set, formatDate } = GlobalFacade();
-  useEffect(() => {
-    if (!userRoleFacade?.result?.data) userRoleFacade.get({});
-    set({
-      breadcrumbs: [
-        { title: 'titles.User', link: '' },
-        { title: 'titles.User/List', link: '' },
-      ],
-    });
-  }, []);
-
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (
-      userRoleFacade?.result?.data?.length &&
-      !userRoleFacade?.result?.data?.filter((item) => item.code === request.filter.roleCode).length
-    ) {
-      navigate({
-        pathname: `/${lang}${routerLinks('User')}`,
-        search: `?${createSearchParams({ filter: '{"roleCode":"staff"}' })}`,
-      });
-      request.filter.roleCode = 'staff';
-      dataTableRef?.current?.onChange(request);
-    }
-  }, [userRoleFacade?.result]);
-
-  const userFacade = UserFacade();
-  useEffect(() => {
-    switch (userFacade.status) {
-      case 'delete.fulfilled':
-      case 'putDisable.fulfilled':
-        dataTableRef?.current?.onChange(request);
-        break;
-    }
-  }, [userFacade.status]);
-  const request = JSON.parse(userFacade?.queryParams || '{}');
-  if (!request.filter || typeof request?.filter === 'string') request.filter = JSON.parse(request?.filter || '{}');
   const { t } = useTranslation();
   const dataTableRef = useRef<TableRefObject>(null);
   return (
     <div className={'container mx-auto grid grid-cols-12 gap-3 px-2.5 pt-2.5'}>
-      <div className="col-span-12 md:col-span-4 lg:col-span-3 -intro-x">
-        <div className="shadow rounded-xl w-full bg-white overflow-hidden">
-          <div className="h-14 flex justify-between items-center border-b border-gray-100 px-4 py-2">
-            <h3 className={'font-bold text-lg'}>Role</h3>
-            {/*<div className="flex items-center">*/}
-            {/*  <Button*/}
-            {/*    icon={<Plus className="icon-cud !h-5 !w-5" />}*/}
-            {/*    text={t('routes.admin.Layout.Add')}*/}
-            {/*    onClick={() => navigate(`/${lang}${routerLinks('Code/Add')}`)}*/}
-            {/*  />*/}
-            {/*</div>*/}
-          </div>
-          <Spin spinning={userRoleFacade.isLoading}>
-            <div className="h-[calc(100vh-12rem)] overflow-y-auto relative scroll hidden sm:block">
-              {userRoleFacade?.result?.data?.map((data, index) => (
-                <div
-                  key={data.id}
-                  className={classNames(
-                    { 'bg-gray-100': request.filter.roleCode === data.code },
-                    'item text-gray-700 font-medium hover:bg-gray-100 flex justify-between items-center border-b border-gray-100 w-full text-left  group',
-                  )}
-                >
-                  <div
-                    onClick={() => {
-                      request.filter.roleCode = data.code;
-                      dataTableRef?.current?.onChange(request);
-                    }}
-                    className="truncate cursor-pointer flex-1 hover:text-teal-900 item-text px-4 py-2"
-                  >
-                    {index + 1}. {data.name}
-                  </div>
-                  {/*<span className="w-16 flex justify-end gap-1">*/}
-                  {/*  {user?.role?.permissions?.includes(keyRole.P_USER_ROLE_UPDATE) && (*/}
-                  {/*    <Tooltip title={t('routes.admin.Layout.Edit')}>*/}
-                  {/*      <button*/}
-                  {/*        className={'opacity-0 group-hover:opacity-100 transition-all duration-300 '}*/}
-                  {/*        title={t('routes.admin.Layout.Edit') || ''}*/}
-                  {/*        onClick={() => navigate(`/${lang}${routerLinks('Code')}/${data.id}/edit`)}*/}
-                  {/*      >*/}
-                  {/*        <Edit className="icon-cud bg-blue-600 hover:bg-blue-400" />*/}
-                  {/*      </button>*/}
-                  {/*    </Tooltip>*/}
-                  {/*  )}*/}
-                  {/*  {user?.role?.permissions?.includes(keyRole.P_USER_ROLE_DELETE) && (*/}
-                  {/*    <Tooltip title={t('routes.admin.Layout.Delete')}>*/}
-                  {/*      <Popconfirm*/}
-                  {/*        placement="left"*/}
-                  {/*        title={t('components.datatable.areYouSureWant')}*/}
-                  {/*        onConfirm={() => dataTableRef?.current?.handleDelete!(data.id || '')}*/}
-                  {/*        okText={t('components.datatable.ok')}*/}
-                  {/*        cancelText={t('components.datatable.cancel')}*/}
-                  {/*      >*/}
-                  {/*        <button*/}
-                  {/*          className={'opacity-0 group-hover:opacity-100 transition-all duration-300'}*/}
-                  {/*          title={t('routes.admin.Layout.Delete') || ''}*/}
-                  {/*        >*/}
-                  {/*          <Trash className="icon-cud bg-red-600 hover:bg-red-400" />*/}
-                  {/*        </button>*/}
-                  {/*      </Popconfirm>*/}
-                  {/*    </Tooltip>*/}
-                  {/*  )}*/}
-                  {/*</span>*/}
-                </div>
-              ))}
-            </div>
-            <div className="p-2 sm:p-0 block sm:hidden">
-              <Select
-                value={request.filter.roleCode}
-                className={'w-full'}
-                options={userRoleFacade?.result?.data?.map((data) => ({ label: data.name, value: data.code }))}
-                onChange={(e) => {
-                  request.filter.roleCode = e;
-                  dataTableRef?.current?.onChange(request);
-                }}
-              />
-            </div>
-          </Spin>
-        </div>
-      </div>
+   
       <div className="col-span-12 md:col-span-8 lg:col-span-9 intro-x">
         <div className="shadow rounded-xl w-full overflow-auto bg-white">
           <div className="sm:min-h-[calc(100vh-8.5rem)] overflow-y-auto p-3">
             <DataTable
               className={'container mx-auto'}
-              facade={userFacade}
+              facade={productFacade}
+              
               ref={dataTableRef}
-              onRow={(record) => ({
-                onDoubleClick: () => navigate(`/${lang}${routerLinks('User')}/${record.id}/edit`),
-              })}
+              // onRow={(record) => ({
+              //   onDoubleClick: () => navigate(`/${lang}${routerLinks('User')}/${record.id}/edit`),
+              // })}
               pageSizeRender={(sizePage: number) => sizePage}
               pageSizeWidth={'50px'}
               xScroll={1100}
@@ -155,92 +39,68 @@ const Page = () => {
               }
               columns={[
                 {
-                  title: `routes.admin.user.Full name`,
+                  title: 'id',
+                  name: 'id',
+                  
+                  tableItem: {
+                    fixed: window.innerWidth > 767 ? 'left' : '',
+                    width: 110,
+                    sorter: true,
+                    
+                  },
+                },
+                {
+                  title: `Tên cửa hàng`,
                   name: 'name',
                   tableItem: {
                     filter: { type: 'search' },
                     width: 210,
-                    fixed: window.innerWidth > 767 ? 'left' : '',
                     sorter: true,
-                    render: (text: string, item: any) => text && <Avatar src={item.avatar} text={item.name} />,
+                    render: (text, item) => item?.productStore?.name,
+
                   },
                 },
+                
                 {
-                  title: 'routes.admin.user.Position',
-                  name: 'position',
-                  tableItem: {
-                    width: 200,
-                    filter: {
-                      type: 'checkbox',
-                      name: 'positionCode',
-                      get: {
-                        facade: CodeFacade,
-                        format: (item: any) => ({
-                          label: item.name,
-                          value: item.code,
-                        }),
-                        params: (fullTextSearch: string, value) => ({
-                          fullTextSearch,
-                          filter: { type: 'position' },
-                          extend: { code: value },
-                        }),
-                      },
-                    },
-                    sorter: true,
-                    render: (item) => item?.name,
-                  },
-                },
-                {
-                  title: 'routes.admin.user.Role',
-                  name: 'role',
+                  title: 'Tên sản phẩm',
+                  name: 'name',
                   tableItem: {
                     width: 110,
                     sorter: true,
-                    render: (item) => item?.name,
                   },
                 },
                 {
-                  title: 'Email',
-                  name: 'email',
+                  title: 'giá',
+                  name: 'price',
                   tableItem: {
                     filter: { type: 'search' },
                     sorter: true,
                   },
                 },
                 {
-                  title: 'routes.admin.user.Phone Number',
-                  name: 'phoneNumber',
+                  title: 'Hàng có sẳn',
+                  name: 'quantity',
                   tableItem: {
                     filter: { type: 'search' },
                     sorter: true,
                   },
                 },
-                // {
-                //   title: 'routes.admin.user.Date of birth',
-                //   name: 'dob',
-                //   tableItem: {
-                //     filter: { type: 'date' },
-                //     sorter: true,
-                //     render: (text: string) => dayjs(text).format(formatDate),
-                //   },
-                // },
-                // {
-                //   title: 'routes.admin.user.Start Date',
-                //   name: 'startDate',
-                //   tableItem: {
-                //     filter: { type: 'search' },
-                //     sorter: true,
-                //     render: (text: string) => dayjs(text).format(formatDate),
-                //   },
-                // },
                 {
-                  title: 'Created',
-                  name: 'createdAt',
+                  title: 'Ngày sản xuất',
+                  name: 'updatedAt',
                   tableItem: {
-                    width: 120,
                     filter: { type: 'date' },
                     sorter: true,
-                    render: (text) => dayjs(text).format(formatDate),
+                    render: (text: string) => dayjs(text).format(formatDate),
+                  },
+                },
+                {
+                  title: 'Ngày hết hạn',
+                  name: 'startDate',
+                  tableItem: {
+                    filter: { type: 'search' },
+                    sorter: true,
+                    render: (text: string) => dayjs(text).format(formatDate),
                   },
                 },
                 {
@@ -263,7 +123,7 @@ const Page = () => {
                                   ? 'components.datatable.areYouSureWantDisable'
                                   : 'components.datatable.areYouSureWantEnable',
                               )}
-                              onConfirm={() => userFacade.putDisable({ id: data.id, disable: !data.isDisabled })}
+                              // onConfirm={() => userFacade.putDisable({ id: data.id, disable: !data.isDisabled })}
                               okText={t('components.datatable.ok')}
                               cancelText={t('components.datatable.cancel')}
                             >
@@ -287,9 +147,9 @@ const Page = () => {
                           <Tooltip title={t('routes.admin.Layout.Edit')}>
                             <button
                               title={t('routes.admin.Layout.Edit') || ''}
-                              onClick={() =>
-                                navigate(`/${lang}${routerLinks('User')}/${request.filter.roleCode}/${data.id}/edit`)
-                              }
+                              // onClick={() =>
+                              //   navigate(`/${lang}${routerLinks('User')}/${request.filter.roleCode}/${data.id}/edit`)
+                              // }
                             >
                               <Edit className="icon-cud bg-teal-900 hover:bg-teal-700" />
                             </button>
@@ -322,7 +182,7 @@ const Page = () => {
                     <Button
                       icon={<Plus className="icon-cud !h-5 !w-5" />}
                       text={t('components.button.New')}
-                      onClick={() => navigate(`/${lang}${routerLinks('User')}/${request.filter.roleCode}/add`)}
+                      // onClick={() => navigate(`/${lang}${routerLinks('User')}/${request.filter.roleCode}/add`)}
                     />
                   )}
                 </div>
