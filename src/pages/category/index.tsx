@@ -4,15 +4,14 @@ import { useNavigate } from 'react-router';
 import { Popconfirm, Spin, Tooltip, Select } from 'antd';
 import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
-import './index.css'
 import { TableRefObject } from '@models';
-import {  GlobalFacade,ProductFacade } from '@store';
+import {  GlobalFacade,CategoryFacade } from '@store';
 import { Check, Disable, Edit, Plus, Trash } from '@svgs';
 import { keyRole,  } from '@utils';
 import dayjs from 'dayjs';
 const Page = () => {
-  const productFacade = ProductFacade();
-  console.log(productFacade);
+  const categoryFacade = CategoryFacade();
+  console.log(categoryFacade);
   
   const { user, set, formatDate } = GlobalFacade();
   const { t } = useTranslation();
@@ -24,7 +23,7 @@ const Page = () => {
           <div className="sm:min-h-[calc(100vh-8.5rem)] overflow-y-auto p-3">
             <DataTable
               className={'container mx-auto'}
-              facade={productFacade}
+              facade={categoryFacade}
               
               ref={dataTableRef}
               // onRow={(record) => ({

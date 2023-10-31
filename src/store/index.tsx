@@ -23,6 +23,7 @@ export * from './parameter';
 export * from './post';
 export * from './post/type';
 export * from './product';
+export * from './category';
 import {
   globalSlice,
   userSlice,
@@ -35,6 +36,7 @@ import {
   postTypeSlice,
   parameterSlice,
   ProductSlice,
+  CategorySlice,
 } from './';
 const rootReducer = combineReducers({
   [globalSlice.name]: globalSlice.reducer,
@@ -48,4 +50,5 @@ const rootReducer = combineReducers({
   [postSlice.name]: postSlice.reducer,
   [postTypeSlice.name]: postTypeSlice.reducer,
   [ProductSlice.name]: ProductSlice.reducer,
+  [CategorySlice.name]: CategorySlice.reducer,
 });

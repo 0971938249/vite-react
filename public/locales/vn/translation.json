@@ -68,7 +68,8 @@
     "Code": "Mã",
     "Data": "Dữ liệu",
     "Post": "Post",
-    "Parameter": "Tham số"
+    "Parameter": "Tham số",
+    "Product": "Sản phẩm"
   },
   "pages": {
     "ForgetPassword": "Quên mật khẩu",
@@ -91,7 +92,8 @@
     "Post/Add": "Tạo mới post {{type}}",
     "Post/Edit": "Chỉnh sửa post {{type}}",
     "Parameter": "Danh sách tham số",
-    "Parameter/Edit": "Chỉnh sửa tham số {{type}}"
+    "Parameter/Edit": "Chỉnh sửa tham số {{type}}",
+    "Product": "Tất cả sản phẩm"
   },
   "columns": {
     "auth": {
@@ -121,6 +123,17 @@
     "footer": "Công ty cổ phần Công nghệ Ari. ©{{year}}"
   },
   "routes": {
+    "product": {
+      "title": "Product",
+      "id": "ID",
+      "name": "Tên cửa hàng",
+      "nameproduct": "Tên sản phẩm",
+      "price": "Giá",
+      "quantity": "hàng có sẳn",
+      "createdAt": "Ngày sản xuất",
+      "updatedAt": "Ngày hết hạn"
+      
+    },
     "auth": {
       "login": {
         "title": "Đăng nhập",

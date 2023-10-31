@@ -21,3 +21,5 @@ export { ReactComponent as UploadSVG } from './upload.svg';
 export { ReactComponent as Key } from './key.svg';
 export { ReactComponent as Out } from './out.svg';
 export { ReactComponent as Logo } from './logo.svg';
+export { ReactComponent as Product } from './product.svg';
+export { ReactComponent as Category } from './category.svg';

@@ -3,7 +3,7 @@ import { URLSearchParamsInit } from 'react-router-dom/dist/dom';
 
 import { keyRole } from '@utils';
 import './index.less';
-import { Calendar, Cog, User } from '@svgs';
+import { Calendar, Cog, User,Product,Category } from '@svgs';
 
 const Layout: IMenu[] = [
   {
@@ -11,8 +11,12 @@ const Layout: IMenu[] = [
     name: 'Dashboard',
   },
   {
-    icon: <User className="h-6 w-6" />,
+    icon: <Product className="h-6 w-6 text-white"  style={{ color: 'white' }}/>,
     name: 'Product',
+  },
+  {
+    icon: <Category className="h-6 w-6" />,
+    name: 'Category',
   },
   {
     icon: <User className="h-6 w-6" />,
