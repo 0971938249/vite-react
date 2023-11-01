@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { Popconfirm, Spin, Tooltip, Select } from 'antd';
 import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
-import './index.css'
+import '../index.css'
 import { TableRefObject } from '@models';
 import {  GlobalFacade,ProductFacade } from '@store';
 import { Check, Disable, Edit, Plus, Trash } from '@svgs';

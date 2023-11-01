@@ -17,12 +17,14 @@ const Layout: IMenu[] = [
   {
     icon: <Category className="h-6 w-6" />,
     name: 'Category',
+    permission: keyRole.P_USER_LISTED,
+    queryParams: { filter: '{"id":"f0b3ac27-f448-435d-a132-acdf148b4b4e"}' },
   },
   {
     icon: <User className="h-6 w-6" />,
     name: 'User',
     permission: keyRole.P_USER_LISTED,
-    queryParams: { filter: '{"roleCode":"supper_admin"}' },
+    // queryParams: { filter: '{"roleCode":"supper_admin"}' },
   },
   {
     icon: <Cog className="h-6 w-6" />,

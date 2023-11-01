@@ -3,30 +3,30 @@ import { API, routerLinks } from '@utils';
 import { useAppDispatch, useTypedSelector, Action, Slice, State } from '@store';
 import { CommonEntity, PaginationQuery, Responses } from '@models';
 
-const name = 'Product-category';
+const name = 'Category';
 const action = {
-  ...new Action<Product-category>(name),
-  getProduct-category: createAsyncThunk(name + '/Product-category', async () =>
-    API.get<Responses<string[]>>(`${routerLinks(name, 'api')}/Product-category`),
+  ...new Action<Category>(name),
+  getCategory: createAsyncThunk(name + '/product-category', async () =>
+    API.get<Responses<string[]>>(`${routerLinks(name, 'api')}/Category`),
   ),
 };
-export const Product-categorySlice = createSlice(new Slice<Product-category>(action));
-export const Product-categoryFacade = () => {
+export const CategorySlice = createSlice(new Slice<Category>(action));
+export const CategoryFacade = () => {
   const dispatch = useAppDispatch();
   return {
-    ...useTypedSelector((state) => state[action.name] as State<Product-category>),
-    set: (values: State<Product-category>) => dispatch(action.set(values)),
-    get: (params: PaginationQuery<Product-category>) => dispatch(action.get(params)),
-    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState?: keyof State<Product-category> }) =>
+    ...useTypedSelector((state) => state[action.name] as State<Category>),
+    set: (values: State<Category>) => dispatch(action.set(values)),
+    get: (params: PaginationQuery<Category>) => dispatch(action.get(params)),
+    getById: ({ id, keyState = 'isVisible' }: { id: string; keyState?: keyof State<Category> }) =>
       dispatch(action.getById({ id, keyState })),
-    post: (values: Product-category) => dispatch(action.post(values)),
-    put: (values: Product-category) => dispatch(action.put(values)),
+    post: (values: Category) => dispatch(action.post(values)),
+    put: (values: Category) => dispatch(action.put(values)),
     putDisable: (values: { id: string; disable: boolean }) => dispatch(action.putDisable(values)),
     delete: (id: string) => dispatch(action.delete(id)),
-    getProduct-category: () => dispatch(action.getProduct-category()),
+    getCategory: () => dispatch(action.getCategory()),
   };
 };
-export class Product-category extends CommonEntity {
+export class Category extends CommonEntity {
   constructor(
     public id?: string,
     public isDisabled?: string,
