@@ -28,7 +28,7 @@ export const CategoryFacade = () => {
     putDisable: (values: { id: string; disable: boolean }) => dispatch(action.putDisable(values)),
     delete: (id: string) => dispatch(action.delete(id)),
     getCategory: () => dispatch(action.getCategory()),
-    getByIdCategory: () => dispatch(action.getByIdCategory(id:String)),
+    getByIdCategory:  ({ fullTextSearch, id }: { fullTextSearch: string; id: string })=> dispatch(action.getByIdCategory(id)),
   };
 };
 export class Category extends CommonEntity {
