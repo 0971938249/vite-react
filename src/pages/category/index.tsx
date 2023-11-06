@@ -21,8 +21,6 @@ const Page = () => {
   const dataTableRef = useRef<TableRefObject>(null);
   const request = JSON.parse(categoryFacade?.queryParams || '{}');
   if (!request.filter || typeof request?.filter === 'string') request.filter = JSON.parse(request?.filter || '{}');
-  console.log(categoryFacade.getByIdCategory({"7d5e8209-a754-4298-aaa1-d4ee9f3f4e59"}));
-  
   return (
     <div className={'container mx-auto grid grid-cols-12 gap-3 px-2.5 pt-2.5'}>
     <div className="col-span-12 md:col-span-4 lg:col-span-3 -intro-x">
