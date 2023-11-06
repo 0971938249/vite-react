@@ -9,6 +9,10 @@ const action = {
   getCategory: createAsyncThunk(name + '/product-category', async () =>
     API.get<Responses<string[]>>(`${routerLinks(name, 'api')}/Category`),
   ),
+  getByIdCategory: createAsyncThunk(name + '/product-category', async (id: string) => {
+    const data = await API.get<Category>(`${routerLinks(name, 'api')}/${id}`);
+    return { data };
+  }),
 };
 export const CategorySlice = createSlice(new Slice<Category>(action));
 export const CategoryFacade = () => {
@@ -24,6 +28,7 @@ export const CategoryFacade = () => {
     putDisable: (values: { id: string; disable: boolean }) => dispatch(action.putDisable(values)),
     delete: (id: string) => dispatch(action.delete(id)),
     getCategory: () => dispatch(action.getCategory()),
+    getByIdCategory: () => dispatch(action.getByIdCategory(id:String)),
   };
 };
 export class Category extends CommonEntity {
