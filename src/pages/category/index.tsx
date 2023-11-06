@@ -19,6 +19,8 @@ const Page = () => {
   const { user, set, formatDate } = GlobalFacade();
   const { t } = useTranslation();
   const dataTableRef = useRef<TableRefObject>(null);
+  
+  
   const request = JSON.parse(categoryFacade?.queryParams || '{}');
   if (!request.filter || typeof request?.filter === 'string') request.filter = JSON.parse(request?.filter || '{}');
   return (
