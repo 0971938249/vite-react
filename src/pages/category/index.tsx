@@ -21,7 +21,7 @@ const Page = () => {
   const dataTableRef = useRef<TableRefObject>(null);
   const request = JSON.parse(categoryFacade?.queryParams || '{}');
   if (!request.filter || typeof request?.filter === 'string') request.filter = JSON.parse(request?.filter || '{}');
-  console.log(request.filter);
+  console.log(categoryFacade.getByIdCategory({"7d5e8209-a754-4298-aaa1-d4ee9f3f4e59"}));
   
   return (
     <div className={'container mx-auto grid grid-cols-12 gap-3 px-2.5 pt-2.5'}>
@@ -90,7 +90,7 @@ const Page = () => {
                     fixed: window.innerWidth > 767 ? 'left' : '',
                     width: 50,
                     sorter: true,
-                    render: (text: string, data) => (
+                    render: (text: string, item) => (
                       <div className={'flex gap-2'}>
                         {
                           <Tooltip title={t(text)}>
@@ -102,39 +102,10 @@ const Page = () => {
                   },
                 },
                 {
-                  title: `routes.product.name`,
-                  name: 'name',
-                  tableItem: {
-                    filter: { type: 'search' },
-                    width: 210,
-                    sorter: true,
-                    render: (text, item) => item?.productStore?.name,
-
-                  },
-                },
-                
-                {
                   title: 'routes.product.nameproduct',
                   name: 'name',
                   tableItem: {
                     width: 110,
-                    sorter: true,
-                  },
-                },
-                {
-                  title: 'routes.product.price',
-                  name: 'price',
-                  tableItem: {
-                    filter: { type: 'search' },
-                    sorter: true,
-                    render: (text, item) => parseInt(text).toLocaleString()
-                  },
-                },
-                {
-                  title: 'routes.product.quantity',
-                  name: 'quantity',
-                  tableItem: {
-                    filter: { type: 'search' },
                     sorter: true,
                   },
                 },
@@ -145,6 +116,28 @@ const Page = () => {
                     filter: { type: 'date' },
                     sorter: true,
                     render: (text: string) => dayjs(text).format(formatDate),
+                  },
+                },
+                {
+                  title: `Mô tả`,
+                  name: 'description',
+                  tableItem: {
+                    filter: { type: 'search' },
+                    width: 210,
+                    sorter: true,
+                    
+
+                  },
+                },
+                {
+                  title: `Slug`,
+                  name: 'slug',
+                  tableItem: {
+                    filter: { type: 'search' },
+                    width: 210,
+                    sorter: true,
+                    
+
                   },
                 },
                 {
