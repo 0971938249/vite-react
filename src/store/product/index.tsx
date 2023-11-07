@@ -53,19 +53,25 @@ export class Product extends CommonEntity {
       avatar?:string,
       userId?:string,
     },
-    public productCategory?:{
-      id?:string,
-      isDisabled?:string,
-      createdAt?:string,
-      updatedAt?:string,
-      name?:string,
-      description?:string,
-      slug?:string,
-    },
+    public productCategory?:productCategory[],
     public isDisabled?: string,
     public createAt?: string,
     public updateAt?: string,
   ) {
+    super();
+  }
+}
+export class productCategory extends CommonEntity {
+  constructor(
+    id?:string,
+    isDisabled?:string,
+    createdAt?:string,
+    updatedAt?:string,
+    name?:string,
+    description?:string,
+    slug?:string,
+  )
+  {
     super();
   }
 }

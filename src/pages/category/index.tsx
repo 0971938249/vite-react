@@ -29,7 +29,7 @@ const Page = () => {
         search: `?${createSearchParams({ filter: '{"id":"bf6de5b8-7ba8-4759-be4f-369697ece69f"}' })}`,
       });
       request.filter.id = 'bf6de5b8-7ba8-4759-be4f-369697ece69f';
-      dataTableRef?.current?.onChange(request);
+      dataTableRef?.current?.onChange(request)
     }
   }, [categoryFacade?.result]);
   const productFacade = ProductFacade();
@@ -100,7 +100,7 @@ const Page = () => {
               columns={[
                 {
                   title: 'routes.product.id',
-                  name: 'id',
+                  name: 'productCategoryId',
                   tableItem: {
                     fixed: window.innerWidth > 767 ? 'left' : '',
                     width: 50,
@@ -109,7 +109,7 @@ const Page = () => {
                       <div className={'flex gap-2'}>
                         {
                           <Tooltip title={t(text)}>
-                             <span className="text-truncate">{text}</span>
+                             <span className="text-truncate">{item?.productCategory?.id}</span>
                           </Tooltip>
                         }
                       </div>

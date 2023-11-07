@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Popconfirm, Spin, Tooltip, Select } from 'antd';
 import { Button } from '@core/button';
 import { DataTable } from '@core/data-table';
@@ -12,11 +12,14 @@ import { keyRole,  } from '@utils';
 import dayjs from 'dayjs';
 const Page = () => {
   const productFacade = ProductFacade();
-  console.log(productFacade);
-  
+
   const { user, set, formatDate } = GlobalFacade();
   const { t } = useTranslation();
   const dataTableRef = useRef<TableRefObject>(null);
+  const { id } = useParams();
+  
+console.log(productFacade);
+
   return (
     <div className={'container mx-auto grid grid-cols-12 gap-3 px-2.5 pt-2.5'}>
       <div className="col-span-12 md:col-span-8 lg:col-span-9 intro-x">
@@ -25,7 +28,7 @@ const Page = () => {
             <DataTable
               className={'container mx-auto'}
               facade={productFacade}
-              
+
               ref={dataTableRef}
               // onRow={(record) => ({
               //   onDoubleClick: () => navigate(`/${lang}${routerLinks('User')}/${record.id}/edit`),
@@ -39,16 +42,16 @@ const Page = () => {
               columns={[
                 {
                   title: 'routes.product.id',
-                  name: 'id',
+                  name: 'productCategoryId',
                   tableItem: {
                     fixed: window.innerWidth > 767 ? 'left' : '',
                     width: 50,
                     sorter: true,
-                    render: (text: string, data) => (
+                    render: (text: string, item) => (
                       <div className={'flex gap-2'}>
                         {
                           <Tooltip title={t(text)}>
-                             <span className="text-truncate">{text}</span>
+                             <span className="text-truncate">{item?.productCategory?.id}</span>
                           </Tooltip>
                         }
                       </div>
