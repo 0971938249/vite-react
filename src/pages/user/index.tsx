@@ -14,7 +14,6 @@ import { keyRole, routerLinks, lang } from '@utils';
 import classNames from 'classnames';
 import { createSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
-
 const Page = () => {
   const userRoleFacade = UserRoleFacade();
   const { user, set, formatDate } = GlobalFacade();
@@ -54,7 +53,7 @@ const Page = () => {
   if (!request.filter || typeof request?.filter === 'string') request.filter = JSON.parse(request?.filter || '{}');
   const { t } = useTranslation();
   const dataTableRef = useRef<TableRefObject>(null);
-  
+  console.log(request);
   return (
     <div className={'container mx-auto grid grid-cols-12 gap-3 px-2.5 pt-2.5'}>
       <div className="col-span-12 md:col-span-4 lg:col-span-3 -intro-x">

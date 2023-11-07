@@ -14,15 +14,29 @@ import classNames from 'classnames';
 import { createSearchParams } from 'react-router-dom';
 const Page = () => {
   const categoryFacade = CategoryFacade();
-  const productFacade = ProductFacade();
-  const navigate = useNavigate();
   const { user, set, formatDate } = GlobalFacade();
+  useEffect(() => {
+    if (!categoryFacade?.result?.data) categoryFacade.get({});
+  }, []);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (
+      categoryFacade?.result?.data?.length &&
+      !categoryFacade?.result?.data?.filter((item) => item.id === request.filter.id).length
+    ) {
+      navigate({
+        pathname: `/${lang}${routerLinks('Category')}`,
+        search: `?${createSearchParams({ filter: '{"id":"bf6de5b8-7ba8-4759-be4f-369697ece69f"}' })}`,
+      });
+      request.filter.id = 'bf6de5b8-7ba8-4759-be4f-369697ece69f';
+      dataTableRef?.current?.onChange(request);
+    }
+  }, [categoryFacade?.result]);
+  const productFacade = ProductFacade();
+  const request = JSON.parse(productFacade?.queryParams || '{}');
+  if (!request.filter || typeof request?.filter === 'string') request.filter = JSON.parse(request?.filter || '{}');
   const { t } = useTranslation();
   const dataTableRef = useRef<TableRefObject>(null);
-  
-  
-  const request = JSON.parse(categoryFacade?.queryParams || '{}');
-  if (!request.filter || typeof request?.filter === 'string') request.filter = JSON.parse(request?.filter || '{}');
   return (
     <div className={'container mx-auto grid grid-cols-12 gap-3 px-2.5 pt-2.5'}>
     <div className="col-span-12 md:col-span-4 lg:col-span-3 -intro-x">
@@ -53,14 +67,15 @@ const Page = () => {
             ))}
           </div>
           <div className="p-2 sm:p-0 block sm:hidden">
-            <Select
-             
-              className={'w-full'}
-              options={categoryFacade?.result?.data?.map((data) => ({ label: data.name, value: data }))}
-              onChange={(e) => {
-               
-              }}
-            />
+          <Select
+                value={request.filter.roleCode}
+                className={'w-full'}
+                options={categoryFacade?.result?.data?.map((data) => ({ label: data.name, value: data.id }))}
+                onChange={(e) => {
+                  request.filter.roleCode = e;
+                  dataTableRef?.current?.onChange(request);
+                }}
+              />
           </div>
         </Spin>
       </div>
@@ -70,7 +85,7 @@ const Page = () => {
         <div className="sm:min-h-[calc(100vh-8.5rem)] overflow-y-auto p-3">
         <DataTable
               className={'container mx-auto'}
-              facade={categoryFacade}
+              facade={productFacade}
               
               ref={dataTableRef}
               // onRow={(record) => ({
