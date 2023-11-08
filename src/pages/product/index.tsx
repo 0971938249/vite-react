@@ -42,12 +42,13 @@ console.log(productFacade);
               columns={[
                 {
                   title: 'routes.product.id',
-                  name: 'productCategoryId',
+                  name: 'id',
                   tableItem: {
                     fixed: window.innerWidth > 767 ? 'left' : '',
                     width: 50,
                     sorter: true,
                     render: (text: string, item) => (
+                      item?.productCategory?.id,
                       <div className={'flex gap-2'}>
                         {
                           <Tooltip title={t(text)}>
@@ -73,6 +74,14 @@ console.log(productFacade);
                 {
                   title: 'routes.product.nameproduct',
                   name: 'name',
+                  tableItem: {
+                    width: 110,
+                    sorter: true,
+                  },
+                },
+                {
+                  title: 'Slug',
+                  name: 'slug',
                   tableItem: {
                     width: 110,
                     sorter: true,

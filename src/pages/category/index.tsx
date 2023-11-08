@@ -22,17 +22,25 @@ const Page = () => {
   useEffect(() => {
     if (
       categoryFacade?.result?.data?.length &&
-      !categoryFacade?.result?.data?.filter((item) => item.id === request.filter.id).length
+      !categoryFacade?.result?.data?.filter((item) => item.id === request.filter.productCategoryId).length
     ) {
       navigate({
         pathname: `/${lang}${routerLinks('Category')}`,
-        search: `?${createSearchParams({ filter: '{"id":"bf6de5b8-7ba8-4759-be4f-369697ece69f"}' })}`,
+        search: `?${createSearchParams({ filter: '{"productCategoryId":"b10ab0b3-8f85-447c-a617-d907cbb00895"}' })}`,
       });
-      request.filter.id = 'bf6de5b8-7ba8-4759-be4f-369697ece69f';
+      request.filter.productCategoryId = 'b10ab0b3-8f85-447c-a617-d907cbb00895';
       dataTableRef?.current?.onChange(request)
     }
   }, [categoryFacade?.result]);
   const productFacade = ProductFacade();
+  useEffect(() => {
+    switch (productFacade.status) {
+      case 'delete.fulfilled':
+      case 'putDisable.fulfilled':
+        dataTableRef?.current?.onChange(request);
+        break;
+    }
+  }, [productFacade.status]);
   const request = JSON.parse(productFacade?.queryParams || '{}');
   if (!request.filter || typeof request?.filter === 'string') request.filter = JSON.parse(request?.filter || '{}');
   const { t } = useTranslation();
@@ -55,8 +63,7 @@ const Page = () => {
               >
                 <div
                 onClick={() => {
-                  request.filter.id = data.id;
-
+                  request.filter.productCategoryId = data.id;
                   dataTableRef?.current?.onChange(request);
                 }}
                   className="truncate cursor-pointer flex-1 hover:text-teal-900 item-text px-4 py-2"
@@ -68,11 +75,11 @@ const Page = () => {
           </div>
           <div className="p-2 sm:p-0 block sm:hidden">
           <Select
-                value={request.filter.roleCode}
+                value={request.filter.id}
                 className={'w-full'}
                 options={categoryFacade?.result?.data?.map((data) => ({ label: data.name, value: data.id }))}
                 onChange={(e) => {
-                  request.filter.roleCode = e;
+                  request.filter.id = e;
                   dataTableRef?.current?.onChange(request);
                 }}
               />
@@ -106,6 +113,7 @@ const Page = () => {
                     width: 50,
                     sorter: true,
                     render: (text: string, item) => (
+                       item?.productCategory?.id,
                       <div className={'flex gap-2'}>
                         {
                           <Tooltip title={t(text)}>
@@ -119,6 +127,14 @@ const Page = () => {
                 {
                   title: 'routes.product.nameproduct',
                   name: 'name',
+                  tableItem: {
+                    width: 110,
+                    sorter: true,
+                  },
+                },
+                {
+                  title: 'Slug',
+                  name: 'slug',
                   tableItem: {
                     width: 110,
                     sorter: true,
